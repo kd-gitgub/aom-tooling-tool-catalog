@@ -1,0 +1,1633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics Tools & Capabilities Browser</title>
+    <style>
+        :root {
+            /* CHEP Brand - Primary Colours */
+            --chep-dark-blue: #0A142D;
+            --chep-brambles-blue: #001C66;
+            --chep-blue: #0079FF;
+            --chep-accent-blue: #D7DDE8;
+            
+            /* CHEP Brand - Secondary Colours */
+            --chep-twilight: #8F29FC;
+            --chep-rock: #AD5321;
+            --chep-pine: #677447;
+            --chep-white: #FFFFFF;
+            
+            /* CHEP Brand - Secondary Tints */
+            --chep-purple-tint: #C77CD8;
+            --chep-peach-tint: #FFA870;
+            --chep-olive-tint: #9AAA6B;
+            --chep-light-purple: #D3CAD9;
+            --chep-light-cream: #F7D5C6;
+            --chep-light-green: #D7DDCB;
+            
+            /* Light Theme Mappings */
+            --bg-primary: #FFFFFF;
+            --bg-secondary: #F8F9FB;
+            --bg-tertiary: #EEF1F5;
+            --bg-hover: #E4E8EE;
+            --text-primary: #0A142D;
+            --text-secondary: #4A5568;
+            --text-muted: #718096;
+            --border-color: #D7DDE8;
+            --border-light: #E8ECF1;
+            
+            /* Accent */
+            --accent-primary: #0079FF;
+            --accent-hover: #0066DD;
+            
+            /* Support Level Colours */
+            --support-none-bg: #EEF1F5;
+            --support-none-text: #718096;
+            --support-limited-bg: #FEE2E2;
+            --support-limited-text: #991B1B;
+            --support-partial-bg: #FEF3C7;
+            --support-partial-text: #92400E;
+            --support-full-bg: #D1FAE5;
+            --support-full-text: #065F46;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Verdana, sans-serif;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+
+        .app-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            background: var(--bg-primary);
+            min-height: 100vh;
+            box-shadow: 0 0 40px rgba(10, 20, 45, 0.1);
+        }
+
+        /* CHEP Brand Bar */
+        .brand-bar {
+            background: var(--chep-dark-blue);
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-logo {
+            font-size: 20px;
+            font-weight: 700;
+            color: white;
+            letter-spacing: 2px;
+        }
+
+        .brand-divider {
+            width: 1px;
+            height: 24px;
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .brand-subtitle {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Tab Bar */
+        .tab-bar {
+            display: flex;
+            background: var(--bg-tertiary);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0 24px;
+        }
+
+        .tab-button {
+            padding: 16px 24px;
+            background: transparent;
+            border: none;
+            border-bottom: 3px solid transparent;
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+            position: relative;
+        }
+
+        .tab-button:hover {
+            color: var(--text-primary);
+            background: var(--bg-hover);
+        }
+
+        .tab-button.active {
+            color: var(--chep-blue);
+            border-bottom-color: var(--chep-blue);
+            background: var(--bg-primary);
+        }
+
+        .tab-button .tab-icon {
+            margin-right: 8px;
+        }
+
+        /* Tab Panels */
+        .tab-panel {
+            display: none;
+        }
+
+        .tab-panel.active {
+            display: block;
+        }
+
+        /* Browser Panel Content */
+        .browser-content {
+            padding: 16px;
+        }
+
+        /* Power App Panel */
+        .powerapp-panel {
+            padding: 24px;
+            background: var(--bg-primary);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .powerapp-container {
+            width: 100%;
+            max-width: 800px;
+            height: 450px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            display: block;
+            background: var(--bg-primary);
+        }
+
+        .powerapp-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: calc(100vh - 120px);
+            min-height: 700px;
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            text-align: center;
+            padding: 40px;
+        }
+
+        .powerapp-placeholder-icon {
+            font-size: 64px;
+            margin-bottom: 24px;
+            opacity: 0.5;
+        }
+
+        .powerapp-placeholder-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+
+        .powerapp-placeholder-text {
+            max-width: 500px;
+            line-height: 1.7;
+            margin-bottom: 24px;
+        }
+
+        .powerapp-placeholder-code {
+            background: var(--bg-tertiary);
+            padding: 16px 24px;
+            border-radius: 8px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 13px;
+            color: var(--chep-blue);
+            border: 1px solid var(--border-color);
+            max-width: 100%;
+            overflow-x: auto;
+        }
+
+        /* Header */
+        .header {
+            margin-bottom: 16px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: var(--chep-dark-blue);
+        }
+
+        .header p {
+            color: var(--text-secondary);
+            font-size: 15px;
+        }
+
+        .stats-bar {
+            display: flex;
+            gap: 16px;
+            margin-top: 12px;
+            padding: 12px 16px;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .stat-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--chep-blue);
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        /* Filters Panel */
+        .filters-panel {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
+            margin-bottom: 16px;
+            padding: 16px;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .filter-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .filter-input, .filter-select {
+            padding: 10px 14px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-size: 14px;
+            font-family: inherit;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .filter-input:focus, .filter-select:focus {
+            outline: none;
+            border-color: var(--chep-blue);
+            box-shadow: 0 0 0 3px rgba(0, 121, 255, 0.15);
+        }
+
+        .filter-select {
+            cursor: pointer;
+        }
+
+        .reset-btn {
+            padding: 10px 20px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+            height: fit-content;
+            align-self: end;
+        }
+
+        .reset-btn:hover {
+            background: var(--bg-hover);
+            color: var(--text-primary);
+        }
+
+        /* View Tabs */
+        .view-tabs {
+            display: flex;
+            gap: 2px;
+            margin-bottom: 12px;
+            padding: 3px;
+            background: var(--bg-secondary);
+            border-radius: 6px;
+            width: fit-content;
+            border: 1px solid var(--border-color);
+        }
+
+        .view-tab {
+            padding: 8px 16px;
+            background: transparent;
+            border: none;
+            border-radius: 4px;
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .view-tab:hover {
+            color: var(--text-primary);
+            background: var(--bg-tertiary);
+        }
+
+        .view-tab.active {
+            background: var(--chep-blue);
+            color: white;
+        }
+
+        /* Matrix View */
+        .matrix-container {
+            overflow-x: auto;
+            background: var(--bg-primary);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .matrix-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        .matrix-table th {
+            position: sticky;
+            top: 0;
+            background: var(--bg-tertiary);
+            padding: 12px 8px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border-color);
+            white-space: nowrap;
+            z-index: 10;
+        }
+
+        .matrix-table th.capability-header {
+            writing-mode: vertical-lr;
+            text-orientation: mixed;
+            transform: rotate(180deg);
+            height: 180px;
+            padding: 8px 4px;
+            font-size: 11px;
+            text-align: center;
+            max-width: 36px;
+        }
+
+        .matrix-table th.tool-header {
+            position: sticky;
+            left: 0;
+            z-index: 20;
+            min-width: 200px;
+        }
+
+        .matrix-table th.proficiency-header {
+            position: sticky;
+            left: 200px;
+            z-index: 20;
+            min-width: 120px;
+            background: var(--bg-tertiary);
+        }
+
+        .matrix-table td {
+            padding: 8px;
+            border-bottom: 1px solid var(--border-light);
+            vertical-align: middle;
+        }
+
+        .matrix-table td.tool-cell {
+            position: sticky;
+            left: 0;
+            background: var(--bg-primary);
+            font-weight: 500;
+            z-index: 5;
+        }
+
+        .matrix-table td.proficiency-cell {
+            position: sticky;
+            left: 200px;
+            background: var(--bg-primary);
+            z-index: 5;
+        }
+
+        .matrix-table tr:hover td {
+            background: var(--bg-hover);
+        }
+
+        .matrix-table tr:hover td.tool-cell,
+        .matrix-table tr:hover td.proficiency-cell {
+            background: var(--bg-hover);
+        }
+
+        .tool-name-link {
+            color: var(--chep-blue);
+            text-decoration: none;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .tool-name-link:hover {
+            color: var(--chep-brambles-blue);
+            text-decoration: underline;
+        }
+
+        /* Support Level Badges */
+        .support-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .support-0 {
+            background: var(--support-none-bg);
+            color: var(--support-none-text);
+        }
+
+        .support-1 {
+            background: var(--support-limited-bg);
+            color: var(--support-limited-text);
+        }
+
+        .support-2 {
+            background: var(--support-partial-bg);
+            color: var(--support-partial-text);
+        }
+
+        .support-3 {
+            background: var(--support-full-bg);
+            color: var(--support-full-text);
+        }
+
+        /* Proficiency Badges */
+        .proficiency-badges {
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+        }
+
+        .proficiency-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .proficiency-badge.nlp {
+            background: rgba(143, 41, 252, 0.12);
+            color: var(--chep-twilight);
+            border: 1px solid rgba(143, 41, 252, 0.25);
+        }
+
+        .proficiency-badge.no-code {
+            background: rgba(103, 116, 71, 0.12);
+            color: var(--chep-pine);
+            border: 1px solid rgba(103, 116, 71, 0.25);
+        }
+
+        .proficiency-badge.low-code {
+            background: rgba(0, 121, 255, 0.12);
+            color: var(--chep-blue);
+            border: 1px solid rgba(0, 121, 255, 0.25);
+        }
+
+        .proficiency-badge.code-first {
+            background: rgba(173, 83, 33, 0.12);
+            color: var(--chep-rock);
+            border: 1px solid rgba(173, 83, 33, 0.25);
+        }
+
+        .proficiency-badge.tbd {
+            background: var(--bg-tertiary);
+            color: var(--text-muted);
+            border: 1px solid var(--border-color);
+        }
+
+        /* Cards View */
+        .cards-container {
+            display: none;
+        }
+
+        .cards-container.active {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 12px;
+        }
+
+        .tool-card {
+            background: var(--bg-primary);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            padding: 16px;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .tool-card:hover {
+            border-color: var(--chep-blue);
+            box-shadow: 0 4px 12px rgba(0, 121, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .tool-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+            gap: 12px;
+        }
+
+        .tool-card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .tool-card-status {
+            font-size: 11px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 500;
+            flex-shrink: 0;
+        }
+
+        .status-commercial {
+            background: rgba(0, 121, 255, 0.1);
+            color: var(--chep-blue);
+        }
+
+        .status-opensource {
+            background: rgba(103, 116, 71, 0.1);
+            color: var(--chep-pine);
+        }
+
+        .tool-card-proficiency {
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+        }
+
+        .tool-card-description {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            line-height: 1.5;
+        }
+
+        .tool-card-capabilities {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .capability-tag {
+            font-size: 11px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            background: var(--bg-tertiary);
+            color: var(--text-secondary);
+        }
+
+        .capability-tag.has-full {
+            background: var(--support-full-bg);
+            color: var(--support-full-text);
+        }
+
+        .capability-tag.has-partial {
+            background: var(--support-partial-bg);
+            color: var(--support-partial-text);
+        }
+
+        /* Tool Detail Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(10, 20, 45, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--bg-primary);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 40px rgba(10, 20, 45, 0.2);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--bg-secondary);
+            border-radius: 12px 12px 0 0;
+        }
+
+        .modal-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--chep-dark-blue);
+        }
+
+        .modal-close {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            color: var(--text-secondary);
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .modal-close:hover {
+            background: var(--bg-hover);
+            color: var(--text-primary);
+        }
+
+        .modal-body {
+            padding: 24px;
+        }
+
+        .modal-section {
+            margin-bottom: 24px;
+        }
+
+        .modal-section-title {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+
+        .modal-description {
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .modal-link {
+            color: var(--chep-blue);
+            text-decoration: none;
+        }
+
+        .modal-link:hover {
+            text-decoration: underline;
+        }
+
+        .modal-proficiency-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .modal-proficiency-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 16px 12px;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid var(--border-light);
+        }
+
+        .modal-proficiency-icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .modal-proficiency-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .modal-proficiency-value {
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .modal-proficiency-value.supported {
+            color: var(--chep-pine);
+        }
+
+        .modal-proficiency-value.not-supported {
+            color: var(--text-muted);
+        }
+
+        .modal-proficiency-value.tbd {
+            color: var(--chep-rock);
+        }
+
+        .modal-capabilities-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+
+        .modal-capability-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 12px;
+            background: var(--bg-secondary);
+            border-radius: 6px;
+            border: 1px solid var(--border-light);
+        }
+
+        .modal-capability-name {
+            font-size: 13px;
+            color: var(--text-primary);
+        }
+
+        /* Legend */
+        .legend-container {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+        .legend {
+            display: flex;
+            gap: 12px;
+            padding: 8px 12px;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .legend-title {
+            font-size: 9px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-right: 4px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .results-count {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+        }
+
+        .results-count strong {
+            color: var(--text-primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .filters-panel {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .stats-bar {
+                flex-wrap: wrap;
+                gap: 16px;
+            }
+
+            .cards-container.active {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-capabilities-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-proficiency-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .legend-container {
+                flex-direction: column;
+            }
+
+            .tab-button {
+                padding: 12px 16px;
+                font-size: 13px;
+            }
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-tertiary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-muted);
+        }
+
+        /* Matrix container needs specific height for scrolling */
+        .matrix-wrapper {
+            max-height: 70vh;
+            overflow: auto;
+        }
+
+        .matrix-container.active {
+            display: block;
+        }
+
+        .matrix-container {
+            display: none;
+        }
+
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-secondary);
+        }
+
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+
+        .empty-state-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- CHEP Brand Bar -->
+        <div class="brand-bar">
+            <span class="brand-logo">CHEP</span>
+            <span class="brand-divider"></span>
+            <span class="brand-subtitle">Data & Analytics</span>
+        </div>
+
+        <!-- Main Tab Bar -->
+        <div class="tab-bar">
+            <button class="tab-button active" data-tab="browser" onclick="switchMainTab('browser')">
+                <span class="tab-icon">📊</span>Capability Browser
+            </button>
+            <button class="tab-button" data-tab="powerapp" onclick="switchMainTab('powerapp')">
+                <span class="tab-icon">📝</span>Request a new tool
+            </button>
+        </div>
+
+        <!-- Tab Panel: Capability Browser -->
+        <div class="tab-panel active" id="panel-browser">
+            <div class="browser-content">
+                <header class="header">
+                    <h1>Analytics Tools & Capabilities Browser</h1>
+                    <p>Explore the support matrix for analytics tools across capability families and proficiency modes</p>
+                    <div class="stats-bar">
+                        <div class="stat-item">
+                            <span class="stat-value" id="total-tools">0</span>
+                            <span class="stat-label">Tools</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value" id="total-capabilities">26</span>
+                            <span class="stat-label">Capability Families</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value" id="commercial-count">0</span>
+                            <span class="stat-label">Commercial</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value" id="opensource-count">0</span>
+                            <span class="stat-label">Open Source</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value" id="proficiency-mapped">0</span>
+                            <span class="stat-label">Proficiency Mapped</span>
+                        </div>
+                    </div>
+                </header>
+
+                <div class="filters-panel">
+                    <div class="filter-group">
+                        <label class="filter-label">Search Tools</label>
+                        <input type="text" class="filter-input" id="search-input" placeholder="Search by tool name...">
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label">Capability Family</label>
+                        <select class="filter-select" id="capability-filter">
+                            <option value="">All Capabilities</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label">Min. Support Level</label>
+                        <select class="filter-select" id="support-filter">
+                            <option value="0">Any (including None)</option>
+                            <option value="1">At least Limited</option>
+                            <option value="2">At least Partial</option>
+                            <option value="3">Full only</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label">License Type</label>
+                        <select class="filter-select" id="license-filter">
+                            <option value="">All Types</option>
+                            <option value="Commercial">Commercial</option>
+                            <option value="Open-source">Open Source</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label">Proficiency Mode</label>
+                        <select class="filter-select" id="proficiency-filter">
+                            <option value="">All Modes</option>
+                            <option value="nlp">NLP / Natural Language</option>
+                            <option value="noCode">No-Code</option>
+                            <option value="lowCode">Low-Code</option>
+                            <option value="codeFirst">Code-First</option>
+                        </select>
+                    </div>
+                    <button class="reset-btn" onclick="resetFilters()">Reset Filters</button>
+                </div>
+
+                <div class="view-tabs">
+                    <button class="view-tab active" data-view="cards" onclick="switchView('cards')">Card View</button>
+                    <button class="view-tab" data-view="matrix" onclick="switchView('matrix')">Matrix View</button>
+                </div>
+
+                <div class="legend-container">
+                    <div class="legend">
+                        <span class="legend-title">Support Level</span>
+                        <div class="legend-item">
+                            <span class="support-badge support-0">0</span>
+                            <span>None</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="support-badge support-1">1</span>
+                            <span>Limited</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="support-badge support-2">2</span>
+                            <span>Partial</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="support-badge support-3">3</span>
+                            <span>Full</span>
+                        </div>
+                    </div>
+                    <div class="legend">
+                        <span class="legend-title">Proficiency</span>
+                        <div class="legend-item">
+                            <span class="proficiency-badge nlp">NLP</span>
+                            <span>Natural Language</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="proficiency-badge no-code">No-Code</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="proficiency-badge low-code">Low-Code</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="proficiency-badge code-first">Code</span>
+                            <span>Code-First</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="proficiency-badge tbd">TBD</span>
+                            <span>Not Yet Assessed</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="results-count">
+                    Showing <strong id="filtered-count">0</strong> of <strong id="total-count">0</strong> tools
+                </div>
+
+                <!-- Cards View -->
+                <div class="cards-container active" id="cards-view"></div>
+
+                <!-- Matrix View -->
+                <div class="matrix-container" id="matrix-view">
+                    <div class="matrix-wrapper">
+                        <table class="matrix-table" id="matrix-table">
+                            <thead id="matrix-head"></thead>
+                            <tbody id="matrix-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab Panel: Power App -->
+        <div class="tab-panel" id="panel-powerapp">
+            <div class="powerapp-panel">
+                <!-- 
+                    ============================================================
+                    POWER APP INTEGRATION
+                    ============================================================
+                    
+                    Replace the placeholder below with your Power App iframe.
+                    
+                    To get your Power App embed URL:
+                    1. Go to Power Apps (make.powerapps.com)
+                    2. Select your app
+                    3. Click "..." → "Details" 
+                    4. Copy the "Web link" 
+                    
+                    Then replace the powerapp-placeholder div with:
+                    
+                    <iframe 
+                        src="https://apps.powerapps.com/play/e/YOUR-APP-ID?tenantId=YOUR-TENANT-ID"
+                        class="powerapp-container"
+                        frameborder="0"
+                        allowfullscreen>
+                    </iframe>
+                    
+                    ============================================================
+                -->
+                <iframe 
+                    src="https://apps.powerapps.com/play/e/default-7c4f77bb-bc61-4789-8aca-54aa04ebb634/a/294c5c07-cc11-4ab4-aea7-b9215f7726bf?tenantId=7c4f77bb-bc61-4789-8aca-54aa04ebb634&hint=02cab763-4c70-4c89-9c64-25cd14f30d23&sourcetime=1769797160490"
+                    class="powerapp-container"
+                    frameborder="0"
+                    allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tool Detail Modal -->
+    <div class="modal-overlay" id="tool-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modal-title">Tool Name</h2>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-section">
+                    <h3 class="modal-section-title">Description</h3>
+                    <p class="modal-description" id="modal-description"></p>
+                </div>
+                <div class="modal-section">
+                    <h3 class="modal-section-title">Details</h3>
+                    <p><strong>License:</strong> <span id="modal-license"></span></p>
+                    <p><strong>Website:</strong> <a class="modal-link" id="modal-url" href="#" target="_blank"></a></p>
+                </div>
+                <div class="modal-section">
+                    <h3 class="modal-section-title">Proficiency Modes</h3>
+                    <div class="modal-proficiency-grid" id="modal-proficiency"></div>
+                </div>
+                <div class="modal-section">
+                    <h3 class="modal-section-title">Capability Support</h3>
+                    <div class="modal-capabilities-grid" id="modal-capabilities"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Capability names in order
+        const CAPABILITY_NAMES = [
+            "Advanced Visualisation Techniques",
+            "AI Application Development",
+            "Business Intelligence Analysis",
+            "Computer Vision Applications",
+            "Dashboard & Report Development",
+            "Data Ingestion & Processing",
+            "Data Modelling & Schema",
+            "Data Product Design & User Experience",
+            "Data Product Development",
+            "Data Product Operations & Support",
+            "Data Transformation & Quality",
+            "Decision Support Systems",
+            "Forecasting & Planning",
+            "Governance & Compliance",
+            "LLM Development & Operations",
+            "Machine Learning Development",
+            "Model Deployment & Serving",
+            "Model Lifecycle Management",
+            "Modelling Governance",
+            "Pattern Recognition & Anomaly Detection",
+            "Process Management",
+            "SQL & Code Optimisation",
+            "Specialised ML Applications",
+            "Specialised Visualisation Applications",
+            "Data Observability",
+            "Process Automation"
+        ];
+
+        const SUPPORT_LABELS = {
+            0: "None",
+            1: "Limited",
+            2: "Partial",
+            3: "Full"
+        };
+
+        const PROFICIENCY_LABELS = {
+            nlp: "NLP",
+            noCode: "No-Code",
+            lowCode: "Low-Code",
+            codeFirst: "Code-First"
+        };
+
+        const PROFICIENCY_ICONS = {
+            nlp: "💬",
+            noCode: "🖱️",
+            lowCode: "⚙️",
+            codeFirst: "💻"
+        };
+
+        // Tool data with proficiency modes
+        const TOOLS_DATA = [
+            {"name":"Adobe Figma","status":"Commercial","description":"A collaborative web-based design and prototyping tool that allows teams to create, test, and share user interface designs in real-time. It streamlines the design-to-development process with features for vector editing, interactive prototyping, and developer handoff, ensuring consistency across web and mobile applications.","url":"https://www.figma.com/","capabilities":[0,0,0,0,0,0,0,0,0,2,0,0,0,1,0,0,0,0,0,0,3,0,0,0,0,3],"proficiency":{"nlp":null,"noCode":true,"lowCode":true,"codeFirst":false}},
+            {"name":"Alteryx Designer","status":"Commercial","description":"A data preparation and analytics platform that enables users to blend, clean, and analyze data from multiple sources without requiring coding skills. Designer offers a visual drag-and-drop interface for building analytics workflows, performing statistical analysis, and creating predictive models.","url":"https://www.alteryx.com/products/alteryx-designer","capabilities":[2,0,0,0,2,3,0,0,0,0,3,0,2,0,0,2,0,0,0,3,0,2,0,0,0,2],"proficiency":{"nlp":null,"noCode":true,"lowCode":true,"codeFirst":false}},
+            {"name":"Apache Zeppelin Notebook","status":"Open-source","description":"An open-source web-based notebook platform that enables interactive data exploration, visualization, and collaboration. Zeppelin supports multiple programming languages including Python, Scala, R, and SQL, allowing data scientists and analysts to create shareable documents that combine code, visualizations, and narrative text.","url":"https://zeppelin.apache.org","capabilities":[2,0,2,0,0,2,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,2,0,0,0,0],"proficiency":{"nlp":null,"noCode":false,"lowCode":true,"codeFirst":true}},
+            {"name":"Atlassian Bitbucket","status":"Commercial","description":"A Git-based version control and code collaboration platform designed for software development teams. Bitbucket provides source code management, pull request workflows, continuous integration pipelines, and deployment capabilities, enabling development teams to collaborate on code and manage software release processes.","url":"https://bitbucket.org","capabilities":[0,0,0,0,0,0,0,0,0,1,0,0,0,2,0,0,0,1,0,0,0,3,0,0,0,2],"proficiency":{"nlp":null,"noCode":false,"lowCode":true,"codeFirst":true}},
+            {"name":"Atlassian Compass","status":"Commercial","description":"A developer experience platform that helps engineering teams track distributed software architecture and manage metadata, components, and dependencies. It provides a unified component catalog and health scorecards to improve visibility, compliance, and operational readiness across complex microservices environments.","url":"https://www.atlassian.com/software/compass","capabilities":[0,0,0,0,0,0,0,0,0,2,0,0,0,1,0,0,0,0,0,0,3,0,0,0,0,3],"proficiency":{"nlp":null,"noCode":true,"lowCode":true,"codeFirst":false}},
+            {"name":"Atlassian Jira","status":"Commercial","description":"A project management and issue tracking platform used for agile software development and project coordination. Jira enables teams to plan, track, and release software projects using customizable workflows, sprint planning tools, reporting dashboards, and integration with development tools.","url":"https://www.atlassian.com/software/jira","capabilities":[0,0,0,0,0,0,0,0,0,2,0,0,0,1,0,0,0,0,0,0,3,0,0,0,0,3],"proficiency":{"nlp":null,"noCode":true,"lowCode":true,"codeFirst":false}},
+            {"name":"Atlassian Jira Align","status":"Commercial","description":"cloud-based Enterprise Agile Planning (EAP) platform that connects business strategy with technical execution. It aggregates team-level data to provide real-time visibility across the enterprise, enabling organizations to scale agile practices, align portfolios with strategic goals, and optimize value delivery across complex development environments.","url":"https://www.atlassian.com/software/jira/align","capabilities":[0,0,0,0,0,0,0,0,0,2,0,0,0,1,0,0,0,0,0,0,3,0,0,0,0,3],"proficiency":{"nlp":null,"noCode":true,"lowCode":true,"codeFirst":false}},
+            {"name":"Atlassian Jira Product Discovery","status":"Commercial","description":"A product management tool designed to help teams capture, prioritize, and collaborate on product ideas and roadmaps directly within Jira. It enables product managers to gather insights, link ideas to development tasks, and transparently communicate product strategy to stakeholders.","url":"https://www.atlassian.com/software/jira/product-discovery","capabilities":[0,0,0,0,0,0,0,0,0,2,0,0,0,1,0,0,0,0,0,0,3,0,0,0,0,3],"proficiency":{"nlp":null,"noCode":true,"lowCode":false,"codeFirst":false}},
+            {"name":"AWS Aurora MySQL","status":"Commercial","description":"A high-performance, fully managed relational database engine compatible with MySQL, built for the cloud to deliver the speed of high-end commercial databases with the cost-effectiveness of open source. It features auto-scaling storage, replication across availability zones, and serverless options for unpredictable workloads.","url":"https://aws.amazon.com/rds/aurora/mysql-features/","capabilities":[0,0,0,0,0,2,3,0,0,0,0,0,0,2,0,1,0,0,0,0,0,3,0,0,0,0],"proficiency":{"nlp":null,"noCode":false,"lowCode":true,"codeFirst":true}},
+            {"name":"AWS Aurora Postgres SQL","status":"Commercial","description":"A fully managed PostgreSQL-compatible database engine that offers high availability and durability by automatically replicating data six times across three availability zones. It optimizes performance for demanding applications and integrates seamlessly with other AWS services for monitoring, security, and machine learning.","url":"https://aws.amazon.com/rds/aurora/postgresql-features/","capabilities":[0,0,0,0,0,0,0,0,0,2,0,0,0,1,0,0,0,0,0,0,3,0,0,0,0,3],"proficiency":{"nlp":null,"noCode":false,"lowCode":true,"codeFirst":true}},
+            {"name":"AWS Cloudwatch","status":"Commercial","description":"A monitoring and observability service that provides data and actionable insights for AWS resources and applications. It collects logs, metrics, and events to help users detect anomalies, visualize performance with dashboards, and automate actions to optimize operational health and resource utilization.","url":"https://aws.amazon.com/cloudwatch/","capabilities":[0,0,0,0,0,0,0,0,0,2,0,0,0,1,0,0,0,0,0,0,3,0,0,0,0,3],"proficiency":{"nlp":null,"noCode":true,"lowCode":true,"codeFirst":true}},
+            {"name":"AWS DynamoDB","status":"Commercial","description":"A serverless, NoSQL key-value database designed for high-scale applications requiring single-digit millisecond performance. It offers built-in security, continuous backups, and automated multi-region replication, making it ideal for mobile, web, gaming, and IoT applications handling massive amounts of data.","url":"https://aws.amazon.com/dynamodb/","capabilities":[0,0,0,0,0,0,0,0,0,2,0,0,0,1,0,0,0,0,0,0,3,0,0,0,0,3],"proficiency":{"nlp":null,"noCode":false,"lowCode":true,"codeFirst":true}},
+            {"name":"AWS EC2 (instances and other)","status":"Commercial","description":"A web service that provides secure, resizable compute capacity in the cloud, allowing users to launch virtual servers (instances) tailored to specific workloads. It offers a wide variety of processor, storage, and networking options to support everything from general-purpose applications to high-performance computing.","url":"https://aws.amazon.com/ec2/","capabilities":[0,0,0,0,0,0,0,0,0,2,0,0,0,1,0,0,0,0,0,0,3,0,0,0,0,3],"proficiency":{"nlp":null,"noCode":false,"lowCode":true,"codeFirst":true}},
+            {"name":"AWS Glue","status":"Commercial","description":"A serverless data integration service that makes it easy to discover, prepare, and combine data for analytics, machine learning, and application development. It includes features for ETL (extract, transform, and load) jobs, a data catalog for metadata management, and visual tools for building data pipelines.","url":"https://aws.amazon.com/glue/","capabilities":[0,0,0,0,0,0,0,0,0,2,0,0,0,1,0,0,0,0,0,0,3,0,0,0,0,3],"proficiency":{"nlp":null,"noCode":false,"lowCode":true,"codeFirst":true}},
+            {"name":"AWS Kinesis","status":"Commercial","description":"A platform for collecting, processing, and analyzing real-time, streaming data such as video, audio, application logs, and website clickstreams. It enables applications to respond instantly to incoming data streams, supporting use cases like live video analytics and real-time dashboarding.","url":"https://aws.amazon.com/kinesis/","capabilities":[0,0,0,0,0,0,0,0,0,2,0,0,0,1,0,0,0,0,0,0,3,0,0,0,0,3],"proficiency":{"nlp":null,"noCode":false,"lowCode":true,"codeFirst":true}},
+            {"name":"AWS OpenSearch Service","status":"Commercial","description":"A fully managed service that makes it easy to deploy, secure, and operate OpenSearch clusters for log analytics, application monitoring, and full-text search. It supports visualization through OpenSearch Dashboards and integrates with other AWS services to ingest and analyze high volumes of data securely.","url":"https://aws.amazon.com/opensearch-service/","capabilities":[0,0,0,0,0,0,0,0,0,2,0,0,0,1,0,0,0,0,0,0,3,0,0,0,0,3],"proficiency":{"nlp":null,"noCode":false,"lowCode":true,"codeFirst":true}},
+            {"name":"AWS Redshift","status":"Commercial","description":"A fully managed, petabyte-scale cloud data warehouse that uses SQL to analyze structured and semi-structured data across data warehouses, operational databases, and data lakes. It delivers fast query performance using columnar storage, massive parallel processing, and machine learning-based optimization.","url":"https://aws.amazon.com/redshift/","capabilities":[0,0,0,0,0,0,0,0,0,2,0,0,0,1,0,0,0,0,0,0,3,0,0,0,0,3],"proficiency":{"nlp":null,"noCode":false,"lowCode":true,"codeFirst":true}},
+            {"name":"AWS Relational Database Service","status":"Commercial","description":"A collection of managed services that simplifies setting up, operating, and scaling databases in the cloud. It supports multiple database engines—including Amazon Aurora, PostgreSQL, MySQL, MariaDB, Oracle, and SQL Server—handling routine tasks like hardware provisioning, database setup, patching, and backups.","url":"https://aws.amazon.com/rds/","capabilities":[0,0,0,0,0,0,0,0,0,2,0,0,0,1,0,0,0,0,0,0,3,0,0,0,0,3],"proficiency":{"nlp":null,"noCode":false,"lowCode":true,"codeFirst":true}},
+            {"name":"AWS Starburst for EKS","status":"Commercial","description":"A data lake analytics platform deployed on Amazon EKS that allows users to run fast, interactive SQL queries across distributed data sources without moving data. It provides a single point of access to query data in data lakes, warehouses, and streaming systems with enterprise-grade security and performance.","url":"https://aws.amazon.com/marketplace/pp/prodview-u7k5j54j4r5e4","capabilities":[0,0,0,0,0,0,0,0,0,2,0,0,0,1,0,0,0,0,0,0,3,0,0,0,0,3],"proficiency":{"nlp":null,"noCode":false,"lowCode":true,"codeFirst":true}},
+            {"name":"AWS s3 Data Storage","status":"Commercial","description":"An object storage service offering industry-leading scalability, data availability, security, and performance. It allows customers of all sizes to store and protect any amount of data for a range of use cases, such as data lakes, websites, mobile applications, backup and restore, archive, and big data analytics.","url":"https://aws.amazon.com/s3/","capabilities":[0,0,0,0,0,0,0,0,0,2,0,0,0,1,0,0,0,0,0,0,3,0,0,0,0,3],"proficiency":{"nlp":null,"noCode":false,"lowCode":true,"codeFirst":true}},
+            {"name":"Azure SQL Database","status":"Commercial","description":"Microsoft's cloud-based relational database service built for modern applications and analytics workloads. Azure SQL Database provides managed database capabilities with built-in intelligence, automatic scaling, and enterprise-grade security features including threat detection and data encryption.","url":"https://azure.microsoft.com/en-us/products/azure-sql","capabilities":[0,0,0,0,0,2,3,0,0,0,0,0,0,3,0,1,0,0,0,0,0,3,0,0,0,0],"proficiency":{"nlp":null,"noCode":false,"lowCode":true,"codeFirst":true}},
+            {"name":"BASH script","status":"Open-source","description":"A command-line shell and scripting language that serves as the default command interpreter for most Linux and Unix-based operating systems, providing an interface for executing system commands and automating administrative tasks.","url":"https://www.w3schools.com/bash/bash_script.php","capabilities":[0,0,0,0,0,2,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,2],"proficiency":{"nlp":false,"noCode":false,"lowCode":false,"codeFirst":true}},
+            {"name":"Brunner BI Measure Killer","status":"Open-source","description":"A Power BI optimization tool that identifies and removes unused columns and measures from semantic models while providing comprehensive lineage analysis across reports, dataflows, and downstream models.","url":"https://www.brunner.bi/measurekiller","capabilities":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"proficiency":{"nlp":null,"noCode":true,"lowCode":false,"codeFirst":false}},
+            {"name":"C#","status":"Open-source","description":"A modern, object-oriented programming language developed by Microsoft as part of the .NET framework. C# is used for building Windows applications, web services, mobile apps, and enterprise software solutions.","url":"https://docs.microsoft.com/en-us/dotnet/csharp/","capabilities":[0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,2],"proficiency":{"nlp":false,"noCode":false,"lowCode":false,"codeFirst":true}},
+            {"name":"CDataSoftware DBAmp","status":"Commercial","description":"A data integration tool designed for Salesforce data replication and synchronization. DBAmp enables organizations to extract, transform, and load Salesforce data into SQL Server databases.","url":"https://www.cdata.com/dbamp/","capabilities":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"proficiency":{"nlp":null,"noCode":false,"lowCode":true,"codeFirst":true}},
+            {"name":"Cygwin","status":"Open-source","description":"A Linux-like environment and command-line interface for Windows that provides a comprehensive collection of GNU and Open Source tools, enabling developers to run native Linux applications on Windows systems.","url":"https://www.cygwin.com/","capabilities":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"proficiency":{"nlp":false,"noCode":false,"lowCode":false,"codeFirst":true}},
+            {"name":"Databricks Catalog and Data Access","status":"Commercial","description":"Unity Catalog - Databricks' governance solution that provides centralized access control, data discovery, and lineage tracking across all data assets.","url":"https://docs.databricks.com/data-governance/unity-catalog/","capabilities":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"proficiency":{"nlp":null,"noCode":true,"lowCode":true,"codeFirst":true}},
+            {"name":"Databricks Compute & Infrastructure","status":"Commercial","description":"The underlying compute platform that provides scalable, cloud-based processing power for data and AI workloads. It includes autoscaling clusters, serverless computing options, and optimized runtimes for different workload types.","url":"https://docs.databricks.com/clusters/","capabilities":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"proficiency":{"nlp":null,"noCode":false,"lowCode":true,"codeFirst":true}},
+            {"name":"Databricks Dashboards & Analytics","status":"Commercial","description":"A business intelligence and visualization platform integrated within Databricks that enables users to create interactive dashboards, reports, and analytics applications.","url":"https://docs.databricks.com/aws/en/dashboards/","capabilities":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"proficiency":{"nlp":null,"noCode":true,"lowCode":true,"codeFirst":false}},
+            {"name":"Databricks ML & AI applications","status":"Commercial","description":"A machine learning platform that provides capabilities for building, training, and deploying AI models. It includes MLflow for experiment tracking, automated machine learning features, model serving infrastructure.","url":"https://docs.databricks.com/machine-learning/","capabilities":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"proficiency":{"nlp":null,"noCode":false,"lowCode":true,"codeFirst":true}},
+            {"name":"Databricks Notebooks & Development","status":"Commercial","description":"Interactive, collaborative computational environments that combine code, visualizations, and narrative text in a single document. Databricks notebooks support multiple programming languages.","url":"https://docs.databricks.com/notebooks/","capabilities":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"proficiency":{"nlp":null,"noCode":false,"lowCode":true,"codeFirst":true}},
+            {"name":"Databricks Workflows and Orchestration","status":"Commercial","description":"Job scheduling and workflow automation capabilities that enable organizations to create, monitor, and manage complex data pipelines and analytics processes.","url":"https://docs.databricks.com/workflows/","capabilities":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"proficiency":{"nlp":null,"noCode":false,"lowCode":true,"codeFirst":true}},
+            {"name":"Dataiku","status":"Commercial","description":"A data science platform that provides capabilities for data preparation, machine learning, and model deployment. Dataiku offers both code-free and code-friendly approaches.","url":"https://www.dataiku.com","capabilities":[0,2,0,0,2,0,0,0,0,0,3,0,0,2,0,3,0,3,0,0,0,0,0,0,0,0],"proficiency":{"nlp":true,"noCode":true,"lowCode":true,"codeFirst":true}},
+            {"name":"DAX Studio","status":"Open-source","description":"A query execution and performance analysis tool that enables developers to write, test, and optimize DAX queries for Power BI, Analysis Services, and Excel data models.","url":"https://daxstudio.org/","capabilities":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"proficiency":{"nlp":false,"noCode":false,"lowCode":false,"codeFirst":true}},
+            {"name":"Dell Boomi","status":"Commercial","description":"A cloud-based integration platform-as-a-service (iPaaS) that enables organizations to connect applications, data, and processes across cloud and on-premises environments.","url":"https://boomi.com","capabilities":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"proficiency":{"nlp":null,"noCode":true,"lowCode":true,"codeFirst":false}},
+            {"name":"Docker","status":"Commercial","description":"A containerization platform that enables developers to build, share, and run applications in isolated, portable environments using lightweight containers instead of traditional virtual machines.","url":"https://www.docker.com/","capabilities":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,2,0,0,0,0,0,0,0,0],"proficiency":{"nlp":false,"noCode":false,"lowCode":false,"codeFirst":true}},
+            {"name":"EvidentlyAI","status":"Open-source","description":"An open-source ML and LLM observability framework that enables teams to evaluate, test, and monitor AI systems throughout their lifecycle.","url":"https://www.evidentlyai.com/","capabilities":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"proficiency":{"nlp":null,"noCode":false,"lowCode":true,"codeFirst":true}},
+            {"name":"FusionCharts Suite","status":"Commercial","description":"A JavaScript charting library that enables developers to create interactive and responsive charts and dashboards for web and mobile applications.","url":"https://www.fusioncharts.com/","capabilities":[0,0,0,0,0,0,0,0,0,2,0,0,0,1,0,0,0,0,0,0,3,0,0,0,0,3],"proficiency":{"nlp":false,"noCode":false,"lowCode":true,"codeFirst":true}},
+            {"name":"Golang","status":"Open-source","description":"An open-source programming language developed by Google, designed to combine simplicity with high performance and scalability for modern computing environments.","url":"https://go.dev/","capabilities":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"proficiency":{"nlp":false,"noCode":false,"lowCode":false,"codeFirst":true}},
+            {"name":"Google Geocode API","status":"Commercial","description":"A web service that converts addresses into geographic coordinates (latitude and longitude) and vice versa.","url":"https://developers.google.com/maps/documentation/geocoding","capabilities":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"proficiency":{"nlp":false,"noCode":false,"lowCode":true,"codeFirst":true}},
+            {"name":"Great Expectations","status":"Open-source","description":"An open-source Python library for data validation, documentation, and profiling that helps teams maintain data quality and reliability.","url":"https://greatexpectations.io","capabilities":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"proficiency":{"nlp":false,"noCode":false,"lowCode":true,"codeFirst":true}},
+            {"name":"Hashicorp Terraform","status":"Open-source","description":"An infrastructure as code tool by HashiCorp that enables teams to define, provision, and manage cloud and on-premises infrastructure using declarative configuration files.","url":"https://developer.hashicorp.com/terraform","capabilities":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"proficiency":{"nlp":false,"noCode":false,"lowCode":false,"codeFirst":true}},
+            {"name":"JavaScript","status":"Open-source","description":"A high-level programming language that runs in web browsers and server environments. JavaScript is essential for creating interactive web applications.","url":"https://developer.mozilla.org/en-US/docs/Web/JavaScript","capabilities":[0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2],"proficiency":{"nlp":false,"noCode":false,"lowCode":false,"codeFirst":true}},
+            {"name":"Jupyter Notebooks","status":"Open-source","description":"An open-source web application that creates and shares interactive computational documents containing code, visualizations, and explanatory text.","url":"https://jupyter.org","capabilities":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"proficiency":{"nlp":false,"noCode":false,"lowCode":true,"codeFirst":true}},
+            {"name":"Llamasoft (Coupa Supply Chain Design)","status":"Commercial","description":"An AI-powered supply chain design and planning platform (now part of Coupa) that helps organizations model, optimize, and simulate their supply chain networks.","url":"https://www.coupa.com/products/supply-chain-design","capabilities":[0,0,0,0,0,0,0,0,0,2,0,0,0,1,0,0,0,0,0,0,3,0,0,0,0,3],"proficiency":{"nlp":null,"noCode":true,"lowCode":true,"codeFirst":false}},
+            {"name":"LangGraph","status":"Open-source","description":"A flexible framework for building controllable cognitive architectures that enables developers to create reliable AI agent systems with diverse control flows.","url":"https://www.langchain.com/langgraph","capabilities":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"proficiency":{"nlp":false,"noCode":false,"lowCode":false,"codeFirst":true}},
+            {"name":"Lucidchart","status":"Commercial","description":"A cloud-based diagramming and visual collaboration platform used for creating flowcharts, organizational charts, network diagrams, and other visual representations.","url":"https://www.lucidchart.com","capabilities":[0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0],"proficiency":{"nlp":null,"noCode":true,"lowCode":false,"codeFirst":false}},
+            {"name":"ManageEngine PAM360","status":"Commercial","description":"ManageEngine's Privileged Access Management solution that provides centralized control and monitoring of privileged accounts and access.","url":"https://www.manageengine.com/products/passwordmanagerpro/","capabilities":[0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0],"proficiency":{"nlp":null,"noCode":true,"lowCode":true,"codeFirst":false}},
+            {"name":"MC-Stan","status":"Open-source","description":"A probabilistic programming platform for Bayesian statistical modeling and inference that enables sophisticated data analysis through flexible model specification.","url":"https://mc-stan.org/","capabilities":[1,0,0,0,0,1,2,0,0,1,1,2,3,0,0,3,1,1,1,2,0,2,3,1,0,1],"proficiency":{"nlp":false,"noCode":false,"lowCode":false,"codeFirst":true}},
+            {"name":"Microsoft DQS","status":"Commercial","description":"Data Quality Services - a SQL Server component that provides data cleansing, matching, and monitoring capabilities to improve data quality.","url":"https://docs.microsoft.com/en-us/sql/data-quality-services/","capabilities":[0,1,0,0,0,1,0,0,0,1,3,0,0,2,0,1,0,0,1,2,1,1,0,0,3,2],"proficiency":{"nlp":null,"noCode":true,"lowCode":true,"codeFirst":false}},
+            {"name":"Microsoft GitHub Copilot","status":"Commercial","description":"An AI-powered code completion and suggestion tool developed by GitHub in partnership with OpenAI.","url":"https://github.com/features/copilot","capabilities":[0,2,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,3,0,0,0,2],"proficiency":{"nlp":true,"noCode":false,"lowCode":false,"codeFirst":true}},
+            {"name":"Microsoft Power Apps","status":"Commercial","description":"A low-code/no-code platform for building custom business applications without extensive programming knowledge.","url":"https://powerapps.microsoft.com","capabilities":[0,2,0,0,3,1,2,3,2,2,1,1,0,2,1,1,0,0,1,0,1,0,0,2,1,3],"proficiency":{"nlp":true,"noCode":true,"lowCode":true,"codeFirst":false}},
+            {"name":"Microsoft Power Automate","status":"Commercial","description":"A cloud-based workflow automation platform that enables users to create automated processes between applications and services.","url":"https://powerautomate.microsoft.com","capabilities":[0,2,0,0,0,1,0,0,0,2,2,1,0,2,1,0,0,0,0,0,3,0,0,0,1,3],"proficiency":{"nlp":true,"noCode":true,"lowCode":true,"codeFirst":false}},
+            {"name":"Microsoft PowerBI Desktop","status":"Commercial","description":"A free Windows application for business intelligence that enables analysts to connect to diverse data sources, transform and model data, and create interactive visualizations.","url":"https://powerbi.microsoft.com/desktop/","capabilities":[3,0,3,0,3,2,3,1,1,0,3,1,1,2,0,1,0,0,1,1,0,2,0,0,1,0],"proficiency":{"nlp":true,"noCode":true,"lowCode":true,"codeFirst":false}},
+            {"name":"Microsoft PowerBI Dataflows (ETL)","status":"Commercial","description":"A self-service ETL tool within the Power BI ecosystem that enables organizations to extract, transform, and load data from various sources.","url":"https://learn.microsoft.com/power-bi/transform-model/dataflows/dataflows-introduction-self-service","capabilities":[0,0,0,0,0,2,3,0,0,1,3,0,0,2,0,0,0,0,0,0,1,0,0,0,2,1],"proficiency":{"nlp":null,"noCode":true,"lowCode":true,"codeFirst":false}},
+            {"name":"Microsoft PowerBI Embedded","status":"Commercial","description":"An Azure-based analytics platform that enables developers to integrate Power BI reports, dashboards, and tiles directly into custom applications.","url":"https://azure.microsoft.com/products/power-bi-embedded/","capabilities":[2,0,0,0,3,0,0,1,0,1,0,0,0,1,0,0,2,0,0,0,0,2,0,3,0,0],"proficiency":{"nlp":null,"noCode":false,"lowCode":true,"codeFirst":true}},
+            {"name":"Microsoft PowerBI Gateway","status":"Commercial","description":"A bridge application that securely transfers data between on-premises data sources and Microsoft cloud services.","url":"https://powerbi.microsoft.com/gateway/","capabilities":[0,0,0,0,0,3,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,2],"proficiency":{"nlp":null,"noCode":true,"lowCode":true,"codeFirst":false}},
+            {"name":"Microsoft PowerBI Premium","status":"Commercial","description":"An enterprise-tier capacity-based offering that provides dedicated cloud resources for organizations requiring advanced analytics capabilities.","url":"https://powerbi.microsoft.com/power-bi-premium/","capabilities":[3,2,3,0,3,3,3,1,1,3,3,2,2,3,2,2,2,2,3,1,2,2,1,0,3,2],"proficiency":{"nlp":true,"noCode":true,"lowCode":true,"codeFirst":false}},
+            {"name":"Microsoft PowerBI Pro","status":"Commercial","description":"A user-based license that enables business professionals to create, publish, and share Power BI content while collaborating on data-driven insights.","url":"https://powerbi.microsoft.com/pricing/","capabilities":[3,0,3,0,3,2,3,1,1,2,3,1,1,2,0,1,0,0,1,1,0,2,0,0,1,0],"proficiency":{"nlp":true,"noCode":true,"lowCode":true,"codeFirst":false}},
+            {"name":"Microsoft SQL Server Core Licence","status":"Commercial","description":"A licensing model for Microsoft SQL Server based on the number of cores in the server.","url":"https://www.microsoft.com/en-us/sql-server/sql-server-2022-pricing","capabilities":[0,0,0,0,0,0,0,0,0,2,0,0,0,1,0,0,0,0,0,0,3,0,0,0,0,3],"proficiency":{"nlp":null,"noCode":false,"lowCode":true,"codeFirst":true}},
+            {"name":"Microsoft SQL Server Integration Service (SSIS)","status":"Commercial","description":"A data integration and workflow platform that provides extract, transform, and load (ETL) capabilities for data warehousing and business intelligence projects.","url":"https://docs.microsoft.com/en-us/sql/integration-services/","capabilities":[0,0,0,0,0,3,1,0,0,1,3,0,0,2,0,0,0,0,0,0,2,2,0,0,1,3],"proficiency":{"nlp":null,"noCode":false,"lowCode":true,"codeFirst":true}},
+            {"name":"Microsoft SQL Server Management Studio (SSMS)","status":"Open-source","description":"An integrated environment for managing Microsoft SQL Server infrastructure, databases, and services.","url":"https://docs.microsoft.com/en-us/sql/ssms/","capabilities":[0,0,0,0,0,0,3,0,0,0,0,0,0,2,0,0,0,0,0,0,0,3,0,0,0,0],"proficiency":{"nlp":false,"noCode":false,"lowCode":true,"codeFirst":true}},
+            {"name":"Microsoft Visual Studio Code","status":"Open-source","description":"A lightweight, open-source code editor that supports multiple programming languages and provides customization through extensions.","url":"https://code.visualstudio.com","capabilities":[0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,1,0,1,0,0,0,3,0,0,0,0],"proficiency":{"nlp":true,"noCode":false,"lowCode":false,"codeFirst":true}},
+            {"name":"Microsoft Visual Studio Full IDE","status":"Commercial","description":"An integrated development environment (IDE) for building applications across multiple platforms and languages.","url":"https://visualstudio.microsoft.com","capabilities":[0,2,0,0,0,0,0,0,0,0,0,0,0,2,2,2,3,3,2,0,2,3,0,0,0,2],"proficiency":{"nlp":true,"noCode":false,"lowCode":false,"codeFirst":true}},
+            {"name":"Microsoft Visual Studio Online/Codespaces","status":"Commercial","description":"A cloud-based development environment that provides on-demand development resources accessible from any device.","url":"https://visualstudio.microsoft.com/services/github-codespaces/","capabilities":[0,2,0,0,0,0,0,0,0,0,0,0,0,2,2,2,3,3,2,0,2,3,0,0,0,2],"proficiency":{"nlp":true,"noCode":false,"lowCode":false,"codeFirst":true}},
+            {"name":"Microsoft Windows Task Scheduler","status":"Commercial","description":"A Windows system service that enables users to automatically run programs, scripts, or tasks at specified times or in response to specific events.","url":"https://docs.microsoft.com/en-us/windows/win32/taskschd/task-scheduler-start-page","capabilities":[0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,3],"proficiency":{"nlp":false,"noCode":true,"lowCode":false,"codeFirst":false}},
+            {"name":"Miniforge","status":"Open-source","description":"A minimal installer for conda and mamba package managers that provides Python distribution management for data science and scientific computing.","url":"https://github.com/conda-forge/miniforge","capabilities":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0],"proficiency":{"nlp":false,"noCode":false,"lowCode":false,"codeFirst":true}},
+            {"name":"NetworkX","status":"Open-source","description":"A Python library for creating, manipulating, and studying complex networks and graphs.","url":"https://networkx.org","capabilities":[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,3,0,2,2,0,0,0],"proficiency":{"nlp":false,"noCode":false,"lowCode":false,"codeFirst":true}},
+            {"name":"NodeJS","status":"Open-source","description":"A JavaScript runtime environment that enables server-side JavaScript development.","url":"https://nodejs.org","capabilities":[0,2,0,0,0,2,0,2,1,1,1,0,0,1,0,1,2,1,1,0,0,2,0,0,0,3],"proficiency":{"nlp":false,"noCode":false,"lowCode":false,"codeFirst":true}},
+            {"name":"OpenTofu","status":"Open-source","description":"An open-source infrastructure as code tool under Linux Foundation governance that enables teams to define, provision, and manage cloud infrastructure.","url":"https://opentofu.org/","capabilities":[0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,2,0,2,0,2,3,0,0,0,3],"proficiency":{"nlp":false,"noCode":false,"lowCode":false,"codeFirst":true}},
+            {"name":"Precisely Winshuttle","status":"Commercial","description":"A data management and process automation platform that enables organizations to automate SAP data transactions, migrations, and business processes.","url":"https://www.precisely.com/faq-general-winshuttle/","capabilities":[0,0,0,0,0,2,0,0,0,2,2,0,0,2,0,0,0,0,0,0,2,0,0,0,0,3],"proficiency":{"nlp":null,"noCode":true,"lowCode":true,"codeFirst":false}},
+            {"name":"Pyspark","status":"Open-source","description":"The Python API for Apache Spark, a distributed computing framework designed for processing large datasets across clusters of computers.","url":"https://spark.apache.org/docs/latest/api/python/","capabilities":[0,0,0,0,0,3,2,0,0,0,3,0,0,0,0,3,0,0,0,2,0,3,2,0,0,2],"proficiency":{"nlp":false,"noCode":false,"lowCode":false,"codeFirst":true}},
+            {"name":"Python","status":"Open-source","description":"A high-level programming language used for data science, machine learning, web development, and automation.","url":"https://www.python.org","capabilities":[2,0,0,0,0,2,0,0,0,0,3,0,0,0,0,3,0,0,0,3,0,3,3,0,0,0],"proficiency":{"nlp":false,"noCode":false,"lowCode":false,"codeFirst":true}},
+            {"name":"QGIS (ex Quantum GIS)","status":"Open-source","description":"A free, open-source geographic information system (GIS) that enables users to create, edit, visualize, analyze, and publish geospatial information.","url":"https://www.qgis.org","capabilities":[3,0,0,0,0,2,1,0,0,0,1,0,0,0,0,2,0,0,0,3,0,2,1,3,0,1],"proficiency":{"nlp":false,"noCode":true,"lowCode":true,"codeFirst":true}},
+            {"name":"Qlik","status":"Commercial","description":"A business intelligence and data visualization platform that enables users to create interactive dashboards and perform self-service analytics.","url":"https://www.qlik.com","capabilities":[3,0,3,0,3,1,2,0,0,1,1,1,1,1,0,1,0,0,0,0,0,1,0,0,0,0],"proficiency":{"nlp":true,"noCode":true,"lowCode":true,"codeFirst":false}},
+            {"name":"R","status":"Open-source","description":"A programming language and environment designed for statistical computing, data analysis, and graphics.","url":"https://www.r-project.org","capabilities":[2,0,3,0,0,1,0,0,0,0,1,0,3,0,0,3,0,0,0,1,0,1,2,0,0,0],"proficiency":{"nlp":false,"noCode":false,"lowCode":false,"codeFirst":true}},
+            {"name":"SAP Analytics Cloud","status":"Commercial","description":"An enterprise analytics platform that combines business intelligence, planning, and predictive analytics in a single cloud solution.","url":"https://www.sap.com/products/technology-platform/cloud-analytics.html","capabilities":[3,1,3,0,3,1,1,0,0,1,1,2,3,2,1,3,0,0,1,0,1,1,2,0,0,1],"proficiency":{"nlp":true,"noCode":true,"lowCode":true,"codeFirst":false}},
+            {"name":"SAP BW","status":"Commercial","description":"An enterprise data warehousing solution that integrates data from SAP and non-SAP sources to provide a single version of truth for reporting and analytics.","url":"https://www.sap.com/products/technology/data-warehousing/bw4hana.html","capabilities":[0,0,0,0,0,0,0,0,0,2,0,0,0,1,0,0,0,0,0,0,3,0,0,0,0,3],"proficiency":{"nlp":null,"noCode":false,"lowCode":true,"codeFirst":true}},
+            {"name":"SAP GUI (Desktop)","status":"Commercial","description":"The traditional desktop client interface for accessing SAP enterprise software systems.","url":"https://learning.sap.com/learning-journeys/introducing-sap-abap-platform-fundamentals/introducing-the-sap-gui-1","capabilities":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],"proficiency":{"nlp":false,"noCode":true,"lowCode":false,"codeFirst":false}},
+            {"name":"Salesforce Einstein","status":"Commercial","description":"Salesforce's artificial intelligence platform that brings AI capabilities to CRM and business processes.","url":"https://www.salesforce.com/products/einstein/","capabilities":[0,2,2,0,1,1,1,0,0,0,1,2,2,0,1,2,1,0,0,1,0,1,1,0,0,1],"proficiency":{"nlp":true,"noCode":true,"lowCode":true,"codeFirst":false}},
+            {"name":"Salesforce Mulesoft","status":"Commercial","description":"An integration platform-as-a-service (iPaaS) that enables organizations to connect applications, data, and devices across cloud and on-premises environments.","url":"https://www.mulesoft.com","capabilities":[0,0,0,0,0,3,1,0,0,2,3,0,0,2,0,0,2,0,1,0,2,2,0,0,2,3],"proficiency":{"nlp":null,"noCode":false,"lowCode":true,"codeFirst":true}},
+            {"name":"Scala","status":"Open-source","description":"A programming language that combines object-oriented and functional programming paradigms, running on the Java Virtual Machine.","url":"https://www.scala-lang.org","capabilities":[0,0,0,0,0,3,0,0,0,0,3,0,0,0,0,2,0,0,0,0,0,3,0,0,0,0],"proficiency":{"nlp":false,"noCode":false,"lowCode":false,"codeFirst":true}},
+            {"name":"Simba Connector","status":"Commercial","description":"A suite of standards-based ODBC and JDBC drivers that enable seamless connectivity between applications and disparate data sources.","url":"https://www.insightsoftware.com/simba/","capabilities":[0,0,0,0,0,0,0,0,0,2,0,0,0,1,0,0,0,0,0,0,3,0,0,0,0,3],"proficiency":{"nlp":null,"noCode":false,"lowCode":true,"codeFirst":true}},
+            {"name":"Smolagents","status":"Open-source","description":"A minimalist AI agent framework by Hugging Face that enables developers to build powerful AI agents with minimal code.","url":"https://smolagents.org/","capabilities":[0,3,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0],"proficiency":{"nlp":true,"noCode":false,"lowCode":false,"codeFirst":true}},
+            {"name":"Soda Data Observability","status":"Commercial","description":"A data quality and observability platform that monitors data pipelines, detects anomalies, and ensures data reliability across organizations.","url":"https://www.soda.io","capabilities":[0,0,0,0,0,0,0,0,0,0,3,0,0,2,0,0,0,0,0,2,0,2,0,0,3,0],"proficiency":{"nlp":null,"noCode":true,"lowCode":true,"codeFirst":true}},
+            {"name":"Splunk","status":"Commercial","description":"A platform for searching, monitoring, and analyzing machine-generated data from various sources including servers, networks, applications, and IoT devices.","url":"https://www.splunk.com","capabilities":[0,0,0,0,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,3,0],"proficiency":{"nlp":true,"noCode":true,"lowCode":true,"codeFirst":true}},
+            {"name":"SQL","status":"Open-source","description":"Structured Query Language - the standard programming language for managing and manipulating relational databases.","url":"https://www.w3schools.com/sql/","capabilities":[0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0],"proficiency":{"nlp":false,"noCode":false,"lowCode":false,"codeFirst":true}},
+            {"name":"SS&C Blue Prism","status":"Commercial","description":"A robotic process automation (RPA) platform that enables organizations to automate repetitive, rule-based business processes using software robots.","url":"https://www.blueprism.com","capabilities":[0,1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,3,0,0,0,0,3],"proficiency":{"nlp":null,"noCode":true,"lowCode":true,"codeFirst":false}},
+            {"name":"Spyder IDE","status":"Open-source","description":"An integrated development environment designed specifically for scientific computing and data analysis in Python.","url":"https://www.spyder-ide.org/","capabilities":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,3,2,0,0,0],"proficiency":{"nlp":false,"noCode":false,"lowCode":false,"codeFirst":true}},
+            {"name":"Tabular Editor","status":"Open-source","description":"A productivity development environment for Power BI and Analysis Services tabular models that accelerates semantic model development.","url":"https://tabulareditor.com/","capabilities":[0,0,0,0,0,0,3,0,0,0,1,0,0,2,0,0,0,0,3,0,0,2,0,0,1,0],"proficiency":{"nlp":false,"noCode":false,"lowCode":true,"codeFirst":true}},
+            {"name":"Theobald Software Xtract IS","status":"Commercial","description":"A data integration tool focused on extracting data from SAP systems and loading it into various target systems.","url":"https://theobald-software.com/en/xtract-is","capabilities":[0,0,0,0,0,3,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"proficiency":{"nlp":null,"noCode":false,"lowCode":true,"codeFirst":false}},
+            {"name":"Thoughtspot Analytics","status":"Commercial","description":"A search-driven analytics platform that enables users to search their data using natural language queries and get instant answers.","url":"https://www.thoughtspot.com","capabilities":[2,2,3,0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0],"proficiency":{"nlp":true,"noCode":true,"lowCode":true,"codeFirst":false}},
+            {"name":"Toad for Oracle (Quest)","status":"Commercial","description":"A database management and development toolset that enables developers and DBAs to reduce time and effort spent on daily tasks.","url":"https://www.quest.com/products/toad-for-oracle/","capabilities":[0,0,0,0,0,0,0,0,0,2,0,0,0,1,0,0,0,0,0,0,3,0,0,0,0,3],"proficiency":{"nlp":null,"noCode":false,"lowCode":true,"codeFirst":true}},
+            {"name":"WARP IDE","status":"Commercial","description":"An AI-powered development environment that enables developers to build software using multiple autonomous agents.","url":"https://www.warp.dev/","capabilities":[0,2,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,2,0,0,0,0],"proficiency":{"nlp":true,"noCode":false,"lowCode":false,"codeFirst":true}},
+            {"name":"YAML","status":"Open-source","description":"YAML Ain't Markup Language - a human-readable data serialization format used for configuration files.","url":"https://yaml.org","capabilities":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"proficiency":{"nlp":false,"noCode":false,"lowCode":false,"codeFirst":true}}
+        ];
+
+        // State
+        let filteredTools = [...TOOLS_DATA];
+        let currentView = 'cards';
+        let powerAppLoaded = false;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            populateCapabilityFilter();
+            updateStats();
+            applyFilters();
+        });
+
+        // Main Tab Switching
+        function switchMainTab(tabName) {
+            // Update tab buttons
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.tab === tabName);
+            });
+
+            // Update panels
+            document.querySelectorAll('.tab-panel').forEach(panel => {
+                panel.classList.remove('active');
+            });
+            document.getElementById('panel-' + tabName).classList.add('active');
+
+            // Lazy load Power App iframe on first visit
+            if (tabName === 'powerapp' && !powerAppLoaded) {
+                // Uncomment and modify this when you have your Power App URL:
+                // loadPowerApp('https://apps.powerapps.com/play/e/YOUR-APP-ID?tenantId=YOUR-TENANT');
+                powerAppLoaded = true;
+            }
+        }
+
+        function loadPowerApp(url) {
+            const container = document.querySelector('.powerapp-panel');
+            container.innerHTML = `
+                <iframe 
+                    src="${url}"
+                    class="powerapp-container"
+                    frameborder="0"
+                    allowfullscreen>
+                </iframe>
+            `;
+        }
+
+        function populateCapabilityFilter() {
+            const select = document.getElementById('capability-filter');
+            CAPABILITY_NAMES.forEach((name, index) => {
+                const option = document.createElement('option');
+                option.value = index;
+                option.textContent = name;
+                select.appendChild(option);
+            });
+        }
+
+        function updateStats() {
+            const commercialCount = TOOLS_DATA.filter(t => t.status === 'Commercial').length;
+            const opensourceCount = TOOLS_DATA.filter(t => t.status === 'Open-source').length;
+            const proficiencyMapped = TOOLS_DATA.filter(t => {
+                const p = t.proficiency;
+                return p.nlp !== null || p.noCode !== null || p.lowCode !== null || p.codeFirst !== null;
+            }).length;
+            
+            document.getElementById('total-tools').textContent = TOOLS_DATA.length;
+            document.getElementById('commercial-count').textContent = commercialCount;
+            document.getElementById('opensource-count').textContent = opensourceCount;
+            document.getElementById('total-count').textContent = TOOLS_DATA.length;
+            document.getElementById('proficiency-mapped').textContent = proficiencyMapped;
+        }
+
+        function applyFilters() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            const capabilityIndex = document.getElementById('capability-filter').value;
+            const minSupport = parseInt(document.getElementById('support-filter').value);
+            const licenseType = document.getElementById('license-filter').value;
+            const proficiencyMode = document.getElementById('proficiency-filter').value;
+
+            filteredTools = TOOLS_DATA.filter(tool => {
+                if (searchTerm && !tool.name.toLowerCase().includes(searchTerm)) {
+                    return false;
+                }
+                if (licenseType && tool.status !== licenseType) {
+                    return false;
+                }
+                if (proficiencyMode) {
+                    const profValue = tool.proficiency[proficiencyMode];
+                    if (profValue !== true) {
+                        return false;
+                    }
+                }
+                if (capabilityIndex !== '') {
+                    const capIndex = parseInt(capabilityIndex);
+                    if (tool.capabilities[capIndex] < minSupport) {
+                        return false;
+                    }
+                } else if (minSupport > 0) {
+                    const hasMinSupport = tool.capabilities.some(c => c >= minSupport);
+                    if (!hasMinSupport) {
+                        return false;
+                    }
+                }
+                return true;
+            });
+
+            document.getElementById('filtered-count').textContent = filteredTools.length;
+            renderCurrentView();
+        }
+
+        function renderProficiencyBadges(proficiency) {
+            const badges = [];
+            
+            if (proficiency.nlp === true) {
+                badges.push(`<span class="proficiency-badge nlp">NLP</span>`);
+            }
+            if (proficiency.noCode === true) {
+                badges.push(`<span class="proficiency-badge no-code">No-Code</span>`);
+            }
+            if (proficiency.lowCode === true) {
+                badges.push(`<span class="proficiency-badge low-code">Low-Code</span>`);
+            }
+            if (proficiency.codeFirst === true) {
+                badges.push(`<span class="proficiency-badge code-first">Code</span>`);
+            }
+            
+            const allNull = Object.values(proficiency).every(v => v === null);
+            if (allNull) {
+                badges.push(`<span class="proficiency-badge tbd">TBD</span>`);
+            }
+            
+            if (badges.length === 0) {
+                const hasAnyTrue = Object.values(proficiency).some(v => v === true);
+                if (!hasAnyTrue) {
+                    if (proficiency.nlp === null) badges.push(`<span class="proficiency-badge tbd" title="NLP: TBD">?</span>`);
+                }
+            }
+
+            return badges.join('');
+        }
+
+        function renderCurrentView() {
+            if (currentView === 'cards') {
+                renderCardsView();
+            } else {
+                renderMatrixView();
+            }
+        }
+
+        function renderCardsView() {
+            const container = document.getElementById('cards-view');
+            
+            if (filteredTools.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">🔍</div>
+                        <div class="empty-state-title">No tools match your filters</div>
+                        <p>Try adjusting your search criteria or reset filters</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = filteredTools.map(tool => {
+                const topCapabilities = tool.capabilities
+                    .map((level, index) => ({ name: CAPABILITY_NAMES[index], level }))
+                    .filter(c => c.level > 0)
+                    .sort((a, b) => b.level - a.level)
+                    .slice(0, 5);
+
+                return `
+                    <div class="tool-card" onclick="openToolModal('${tool.name.replace(/'/g, "\\'")}')">
+                        <div class="tool-card-header">
+                            <span class="tool-card-title">${tool.name}</span>
+                            <span class="tool-card-status status-${tool.status.toLowerCase().replace('-', '')}">${tool.status}</span>
+                        </div>
+                        <div class="tool-card-proficiency">
+                            ${renderProficiencyBadges(tool.proficiency)}
+                        </div>
+                        <p class="tool-card-description">${tool.description}</p>
+                        <div class="tool-card-capabilities">
+                            ${topCapabilities.map(c => `
+                                <span class="capability-tag ${c.level === 3 ? 'has-full' : c.level === 2 ? 'has-partial' : ''}">${c.name}</span>
+                            `).join('')}
+                            ${topCapabilities.length === 0 ? '<span class="capability-tag">No capabilities mapped</span>' : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderMatrixView() {
+            const thead = document.getElementById('matrix-head');
+            const tbody = document.getElementById('matrix-body');
+
+            thead.innerHTML = `
+                <tr>
+                    <th class="tool-header">Tool</th>
+                    <th class="proficiency-header">Proficiency</th>
+                    ${CAPABILITY_NAMES.map(name => `<th class="capability-header" title="${name}">${name}</th>`).join('')}
+                </tr>
+            `;
+
+            if (filteredTools.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="${CAPABILITY_NAMES.length + 2}" style="text-align: center; padding: 40px; color: var(--text-secondary);">
+                            No tools match your filters
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = filteredTools.map(tool => `
+                <tr>
+                    <td class="tool-cell">
+                        <a class="tool-name-link" onclick="openToolModal('${tool.name.replace(/'/g, "\\'")}')">${tool.name}</a>
+                    </td>
+                    <td class="proficiency-cell">
+                        <div class="proficiency-badges">
+                            ${renderProficiencyBadges(tool.proficiency)}
+                        </div>
+                    </td>
+                    ${tool.capabilities.map(level => `
+                        <td style="text-align: center;">
+                            <span class="support-badge support-${level}" title="${SUPPORT_LABELS[level]}">${level}</span>
+                        </td>
+                    `).join('')}
+                </tr>
+            `).join('');
+        }
+
+        function switchView(view) {
+            currentView = view;
+            
+            document.querySelectorAll('.view-tab').forEach(tab => {
+                tab.classList.toggle('active', tab.dataset.view === view);
+            });
+
+            document.getElementById('cards-view').classList.toggle('active', view === 'cards');
+            document.getElementById('matrix-view').classList.toggle('active', view === 'matrix');
+
+            renderCurrentView();
+        }
+
+        function openToolModal(toolName) {
+            const tool = TOOLS_DATA.find(t => t.name === toolName);
+            if (!tool) return;
+
+            document.getElementById('modal-title').textContent = tool.name;
+            document.getElementById('modal-description').textContent = tool.description;
+            document.getElementById('modal-license').textContent = tool.status;
+            
+            const urlElement = document.getElementById('modal-url');
+            urlElement.href = tool.url;
+            urlElement.textContent = tool.url;
+
+            const proficiencyContainer = document.getElementById('modal-proficiency');
+            proficiencyContainer.innerHTML = Object.entries(tool.proficiency).map(([key, value]) => {
+                let valueClass, valueText;
+                if (value === true) {
+                    valueClass = 'supported';
+                    valueText = '✓ Supported';
+                } else if (value === false) {
+                    valueClass = 'not-supported';
+                    valueText = '✗ Not Available';
+                } else {
+                    valueClass = 'tbd';
+                    valueText = '? TBD';
+                }
+                
+                return `
+                    <div class="modal-proficiency-item">
+                        <span class="modal-proficiency-icon">${PROFICIENCY_ICONS[key]}</span>
+                        <span class="modal-proficiency-label">${PROFICIENCY_LABELS[key]}</span>
+                        <span class="modal-proficiency-value ${valueClass}">${valueText}</span>
+                    </div>
+                `;
+            }).join('');
+
+            const capabilitiesContainer = document.getElementById('modal-capabilities');
+            capabilitiesContainer.innerHTML = CAPABILITY_NAMES.map((name, index) => `
+                <div class="modal-capability-item">
+                    <span class="modal-capability-name">${name}</span>
+                    <span class="support-badge support-${tool.capabilities[index]}">${tool.capabilities[index]}</span>
+                </div>
+            `).join('');
+
+            document.getElementById('tool-modal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('tool-modal').classList.remove('active');
+        }
+
+        function resetFilters() {
+            document.getElementById('search-input').value = '';
+            document.getElementById('capability-filter').value = '';
+            document.getElementById('support-filter').value = '0';
+            document.getElementById('license-filter').value = '';
+            document.getElementById('proficiency-filter').value = '';
+            applyFilters();
+        }
+
+        // Event listeners
+        document.getElementById('search-input').addEventListener('input', applyFilters);
+        document.getElementById('capability-filter').addEventListener('change', applyFilters);
+        document.getElementById('support-filter').addEventListener('change', applyFilters);
+        document.getElementById('license-filter').addEventListener('change', applyFilters);
+        document.getElementById('proficiency-filter').addEventListener('change', applyFilters);
+
+        document.getElementById('tool-modal').addEventListener('click', (e) => {
+            if (e.target.id === 'tool-modal') {
+                closeModal();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
