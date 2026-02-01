@@ -1,0 +1,2485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics Tools & Capabilities Browser</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <style>
+        :root {
+            /* CHEP Brand - Primary Colours */
+            --chep-dark-blue: #0A142D;
+            --chep-brambles-blue: #001C66;
+            --chep-blue: #0079FF;
+            --chep-accent-blue: #D7DDE8;
+            
+            /* CHEP Brand - Secondary Colours */
+            --chep-twilight: #8F29FC;
+            --chep-rock: #AD5321;
+            --chep-pine: #677447;
+            --chep-white: #FFFFFF;
+            
+            /* CHEP Brand - Secondary Tints */
+            --chep-purple-tint: #C77CD8;
+            --chep-peach-tint: #FFA870;
+            --chep-olive-tint: #9AAA6B;
+            --chep-light-purple: #D3CAD9;
+            --chep-light-cream: #F7D5C6;
+            --chep-light-green: #D7DDCB;
+            
+            /* Light Theme Mappings */
+            --bg-primary: #FFFFFF;
+            --bg-secondary: #F8F9FB;
+            --bg-tertiary: #EEF1F5;
+            --bg-hover: #E4E8EE;
+            --text-primary: #0A142D;
+            --text-secondary: #4A5568;
+            --text-muted: #718096;
+            --border-color: #D7DDE8;
+            --border-light: #E8ECF1;
+            
+            /* Accent */
+            --accent-primary: #0079FF;
+            --accent-hover: #0066DD;
+            
+            /* Support Level Colours */
+            --support-none-bg: #EEF1F5;
+            --support-none-text: #718096;
+            --support-limited-bg: #FEE2E2;
+            --support-limited-text: #991B1B;
+            --support-partial-bg: #FEF3C7;
+            --support-partial-text: #92400E;
+            --support-full-bg: #D1FAE5;
+            --support-full-text: #065F46;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Verdana, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+
+        .app-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            background: var(--bg-primary);
+            min-height: 100vh;
+            box-shadow: 0 0 40px rgba(10, 20, 45, 0.1);
+            position: relative;
+            padding-top: 16px;
+        }
+
+        /* Tab Bar */
+        .tab-bar {
+            display: flex;
+            gap: 12px;
+            padding: 12px 16px;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin: 0 16px 0 16px;
+            position: sticky;
+            top: 0;
+            z-index: 200;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .tab-button {
+            padding: 8px 16px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+            height: 36px;
+            display: flex;
+            align-items: center;
+        }
+
+        .tab-button:hover {
+            color: var(--text-primary);
+            border-color: var(--chep-blue);
+        }
+
+        .tab-button.active {
+            color: #ffffff;
+            background: var(--chep-blue);
+            border-color: var(--chep-blue);
+        }
+
+        .tab-button .tab-icon {
+            margin-right: 6px;
+        }
+
+        /* Tab Panels */
+        .tab-panel {
+            display: none;
+        }
+
+        .tab-panel.active {
+            display: block;
+        }
+
+        /* Browser Panel Content */
+        .browser-content {
+            padding: 16px;
+        }
+
+        /* Power App Panel */
+        .powerapp-panel {
+            padding: 24px;
+            background: var(--bg-primary);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .powerapp-container {
+            width: 100%;
+            max-width: 800px;
+            height: 450px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            display: block;
+            background: var(--bg-primary);
+        }
+
+        .powerapp-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: calc(100vh - 120px);
+            min-height: 700px;
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            text-align: center;
+            padding: 40px;
+        }
+
+        .powerapp-placeholder-icon {
+            font-size: 64px;
+            margin-bottom: 24px;
+            opacity: 0.5;
+        }
+
+        .powerapp-placeholder-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+
+        .powerapp-placeholder-text {
+            max-width: 500px;
+            line-height: 1.7;
+            margin-bottom: 24px;
+        }
+
+        .powerapp-placeholder-code {
+            background: var(--bg-tertiary);
+            padding: 16px 24px;
+            border-radius: 8px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 13px;
+            color: var(--chep-blue);
+            border: 1px solid var(--border-color);
+            max-width: 100%;
+            overflow-x: auto;
+        }
+
+        .stats-bar {
+            display: flex;
+            gap: 16px;
+            margin-top: 12px;
+            padding: 12px 16px;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .stat-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--chep-blue);
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        /* Filters Panel */
+        .filters-panel {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr 0.8fr 0.6fr 0.6fr 0.6fr;
+            gap: 10px;
+            margin-bottom: 16px;
+            padding: 12px 16px;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            position: sticky;
+            top: 76px;
+            z-index: 190;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .filters-panel::before {
+            content: '';
+            position: absolute;
+            top: -16px;
+            left: 0;
+            right: 0;
+            height: 16px;
+            background: var(--bg-primary);
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            min-width: 0;
+        }
+
+        .filter-label {
+            font-size: 9px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            white-space: nowrap;
+            padding-left: 2px;
+        }
+
+        .filter-input {
+            padding: 8px 10px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-size: 12px;
+            font-family: inherit;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            width: 100%;
+            height: 32px;
+            box-sizing: border-box;
+        }
+
+        .filter-select {
+            padding: 8px 10px;
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-size: 12px;
+            font-family: inherit;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            width: 100%;
+            height: 32px;
+            box-sizing: border-box;
+            cursor: pointer;
+        }
+
+        .filter-select option {
+            background: #ffffff;
+            color: var(--text-primary);
+        }
+
+        .filter-input:focus, .filter-select:focus {
+            outline: none;
+            border-color: var(--chep-blue);
+            box-shadow: 0 0 0 3px rgba(0, 121, 255, 0.15);
+        }
+
+        /* Multi-select dropdown */
+        .multi-select {
+            position: relative;
+            width: 100%;
+        }
+
+        .multi-select-trigger {
+            padding: 8px 28px 8px 10px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-size: 12px;
+            font-family: inherit;
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            position: relative;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            height: 32px;
+            box-sizing: border-box;
+        }
+
+        .multi-select-trigger::after {
+            content: '';
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: 4px solid transparent;
+            border-top-color: var(--text-secondary);
+        }
+
+        .multi-select-trigger:hover,
+        .multi-select.open .multi-select-trigger {
+            border-color: var(--chep-blue);
+        }
+
+        .multi-select.open .multi-select-trigger {
+            box-shadow: 0 0 0 3px rgba(0, 121, 255, 0.15);
+        }
+
+        .multi-select-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            margin-top: 4px;
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            max-height: 250px;
+            overflow-y: auto;
+            display: none;
+            min-width: 100%;
+            width: max-content;
+        }
+
+        .multi-select.open .multi-select-dropdown {
+            display: block;
+        }
+
+        .multi-select-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 12px;
+            color: var(--text-primary);
+            transition: background 0.15s;
+            white-space: nowrap;
+        }
+
+        .multi-select-option:hover {
+            background: var(--bg-secondary);
+        }
+
+        .multi-select-option input[type="checkbox"] {
+            width: 14px;
+            height: 14px;
+            margin: 0;
+            cursor: pointer;
+            accent-color: var(--chep-blue);
+        }
+
+        .multi-select-option label {
+            cursor: pointer;
+            flex: 1;
+            white-space: nowrap;
+        }
+
+        .multi-select-clear {
+            padding: 6px 12px;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            font-size: 11px;
+            color: var(--chep-blue);
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+
+        .multi-select-clear:hover {
+            background: var(--bg-secondary);
+        }
+
+        /* Single-select custom dropdown */
+        .single-select {
+            position: relative;
+            width: 100%;
+        }
+
+        .single-select-trigger {
+            padding: 8px 28px 8px 10px;
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-size: 12px;
+            font-family: inherit;
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            position: relative;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            height: 32px;
+            box-sizing: border-box;
+        }
+
+        .single-select-trigger::after {
+            content: '';
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: 4px solid transparent;
+            border-top-color: var(--text-secondary);
+        }
+
+        .single-select-trigger:hover,
+        .single-select.open .single-select-trigger {
+            border-color: var(--chep-blue);
+        }
+
+        .single-select.open .single-select-trigger {
+            box-shadow: 0 0 0 3px rgba(0, 121, 255, 0.15);
+        }
+
+        .single-select-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            margin-top: 4px;
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            max-height: 250px;
+            overflow-y: auto;
+            display: none;
+            min-width: 100%;
+            width: max-content;
+        }
+
+        .single-select.open .single-select-dropdown {
+            display: block;
+        }
+
+        .single-select-option {
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 12px;
+            color: var(--text-primary);
+            transition: background 0.15s;
+            white-space: nowrap;
+        }
+
+        .single-select-option:hover {
+            background: var(--bg-secondary);
+        }
+
+        .single-select-option.selected {
+            background: var(--bg-secondary);
+        }
+
+        .single-select-option.selected::before {
+            content: '✓';
+            margin-right: 8px;
+            color: var(--chep-blue);
+            font-weight: bold;
+        }
+
+        .reset-btn {
+            padding: 6px 10px;
+            background: #0079FF;
+            border: 1px solid #0079FF;
+            border-radius: 6px;
+            color: #ffffff;
+            font-size: 10px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+            white-space: nowrap;
+            height: 32px;
+            box-sizing: border-box;
+        }
+
+        .reset-btn:hover {
+            background: #0066dd;
+            color: #ffffff;
+        }
+
+        /* View Tabs */
+        .view-tabs {
+            display: flex;
+            gap: 1px;
+            padding: 2px;
+            background: var(--bg-primary);
+            border-radius: 5px;
+            width: 100px;
+            flex-shrink: 0;
+            border: 1px solid var(--border-color);
+            height: 32px;
+            box-sizing: border-box;
+        }
+
+        .view-tab {
+            padding: 5px 6px;
+            background: transparent;
+            border: none;
+            border-radius: 4px;
+            color: var(--text-secondary);
+            font-size: 10px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+            flex: 1;
+            text-align: center;
+        }
+
+        .view-tab:hover {
+            color: var(--text-primary);
+            background: var(--bg-tertiary);
+        }
+
+        .view-tab.active {
+            background: #0079FF;
+            color: white;
+        }
+
+        /* Matrix View */
+        .matrix-container {
+            overflow-x: auto;
+            background: var(--bg-primary);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .matrix-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        .matrix-table th {
+            position: sticky;
+            top: 0;
+            background: var(--bg-tertiary);
+            padding: 12px 8px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border-color);
+            white-space: nowrap;
+            z-index: 10;
+        }
+
+        .matrix-table th.capability-header {
+            writing-mode: vertical-lr;
+            text-orientation: mixed;
+            transform: rotate(180deg);
+            height: 180px;
+            padding: 8px 4px;
+            font-size: 11px;
+            text-align: center;
+            max-width: 36px;
+        }
+
+        .matrix-table th.tool-header {
+            position: sticky;
+            left: 0;
+            z-index: 20;
+            min-width: 200px;
+        }
+
+        .matrix-table th.proficiency-header {
+            position: sticky;
+            left: 200px;
+            z-index: 20;
+            min-width: 160px;
+            background: var(--bg-tertiary);
+        }
+
+        .matrix-table td {
+            padding: 8px;
+            border-bottom: 1px solid var(--border-light);
+            vertical-align: middle;
+        }
+
+        .matrix-table td.tool-cell {
+            position: sticky;
+            left: 0;
+            background: var(--bg-primary);
+            font-weight: 500;
+            z-index: 5;
+        }
+
+        .matrix-table td.proficiency-cell {
+            position: sticky;
+            left: 200px;
+            background: var(--bg-primary);
+            z-index: 5;
+        }
+
+        .matrix-table tr:hover td {
+            background: var(--bg-hover);
+        }
+
+        .matrix-table tr:hover td.tool-cell,
+        .matrix-table tr:hover td.proficiency-cell {
+            background: var(--bg-hover);
+        }
+
+        .tool-name-link {
+            color: var(--chep-blue);
+            text-decoration: none;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .tool-name-link:hover {
+            color: var(--chep-brambles-blue);
+            text-decoration: underline;
+        }
+
+        /* Support Level Badges */
+        .support-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .support-0 {
+            background: var(--support-none-bg);
+            color: var(--support-none-text);
+        }
+
+        .support-1 {
+            background: var(--support-limited-bg);
+            color: var(--support-limited-text);
+        }
+
+        .support-2 {
+            background: var(--support-partial-bg);
+            color: var(--support-partial-text);
+        }
+
+        .support-3 {
+            background: var(--support-full-bg);
+            color: var(--support-full-text);
+        }
+
+        /* Proficiency Badges */
+        .proficiency-badges {
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+        }
+
+        .proficiency-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .proficiency-badge.nlp {
+            background: #E7FAE8;
+            color: #00B050;
+            border: 1px solid #c4e8c6;
+        }
+
+        .proficiency-badge.no-code {
+            background: #F1E6DF;
+            color: #AD5321;
+            border: 1px solid #e0cfc4;
+        }
+
+        .proficiency-badge.low-code {
+            background: #E9EFFF;
+            color: #3477F6;
+            border: 1px solid #c4d4f4;
+        }
+
+        .proficiency-badge.code-first {
+            background: #E7E4EA;
+            color: #8F29FC;
+            border: 1px solid #d4d0d8;
+        }
+
+        .proficiency-badge.tbd {
+            background: var(--bg-tertiary);
+            color: var(--text-muted);
+            border: 1px solid var(--border-color);
+        }
+
+        /* Cards View */
+        .cards-container {
+            display: none;
+        }
+
+        .cards-container.active {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .tool-card {
+            background: var(--bg-primary);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            transition: all 0.2s;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .tool-card:hover {
+            border-color: var(--chep-blue);
+            box-shadow: 0 4px 12px rgba(0, 121, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .tool-card-leanix {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+        }
+
+        .tool-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+            gap: 12px;
+            padding-right: 100px;
+        }
+
+        .tool-card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* TIME Status Badges */
+        .time-badge {
+            font-size: 10px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            flex-shrink: 0;
+            background: var(--bg-tertiary);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+        }
+
+        .time-invest {
+            background: #E7FAE8;
+            color: #2E7D32;
+            border: 1px solid #A5D6A7;
+        }
+
+        .time-migrate {
+            background: #E3F2FD;
+            color: #1565C0;
+            border: 1px solid #90CAF9;
+        }
+
+        .time-tolerate {
+            background: #FFF8E1;
+            color: #F57F17;
+            border: 1px solid #FFE082;
+        }
+
+        .time-eliminate {
+            background: #FFEBEE;
+            color: #C62828;
+            border: 1px solid #EF9A9A;
+        }
+
+        .tool-card-proficiency {
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+            margin-bottom: 14px;
+        }
+
+        .tool-card-description {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 14px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            line-height: 1.5;
+        }
+
+        .tool-card-footer {
+            margin-top: auto;
+            padding-top: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tool-card-cluster {
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .tool-card-cluster:first-child {
+            flex-shrink: 0;
+            white-space: nowrap;
+        }
+
+        .tool-card-cluster:last-child {
+            flex-shrink: 0;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .tool-card-cluster-label {
+            color: #000000;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .tool-card-target-date {
+            color: #666666;
+            font-size: 10px;
+            font-weight: 400;
+        }
+
+        .tool-card-target-date-label {
+            color: #666666;
+            font-size: 10px;
+            font-weight: 400;
+        }
+
+        .tool-card-target-date-value {
+            color: #666666;
+            font-size: 10px;
+            font-weight: 400;
+            margin-left: 3px;
+        }
+
+        .tool-card-footer .time-badge {
+            font-size: 9px;
+            padding: 3px 6px;
+        }
+
+        .tool-card-cluster-value {
+            font-weight: 700;
+            color: #000000;
+            font-size: 12px;
+        }
+
+        .tool-card-cluster-value.not-clustered {
+            font-weight: 700;
+            color: #000000;
+        }
+
+        /* LeanIX Badge */
+        .leanix-badge {
+            display: inline-block;
+            height: 32px;
+            border-radius: 3px;
+            overflow: hidden;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+
+        .leanix-badge.active {
+            cursor: pointer;
+            opacity: 1;
+        }
+
+        .leanix-badge.active:hover {
+            transform: scale(1.05);
+            opacity: 0.85;
+        }
+
+        .leanix-badge.inactive {
+            cursor: default;
+            filter: grayscale(100%);
+            opacity: 0.3;
+        }
+
+        .leanix-badge img {
+            height: 100%;
+            width: auto;
+            pointer-events: none;
+        }
+
+        /* Tool Detail Modal - SharePoint iframe optimized with draggable scrollbar */
+        .modal-overlay {
+            display: none;
+            position: absolute;
+            left: 0;
+            width: 100%;
+            background: rgba(10, 20, 45, 0.5);
+            z-index: 10000;
+            justify-content: center;
+            padding: 24px;
+            box-sizing: border-box;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--bg-primary);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            max-width: 800px;
+            width: 90%;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 20px 40px rgba(10, 20, 45, 0.2);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--bg-secondary);
+            border-radius: 12px 12px 0 0;
+            flex-shrink: 0;
+        }
+
+        .modal-body {
+            padding: 16px 24px 24px;
+            overflow-y: auto;
+            max-height: 450px;
+        }
+
+        /* Prominent scrollbar for modal - easy to grab and drag */
+        .modal-body::-webkit-scrollbar {
+            width: 16px;
+        }
+
+        .modal-body::-webkit-scrollbar-track {
+            background: var(--bg-tertiary);
+            border-radius: 0 0 12px 0;
+        }
+
+        .modal-body::-webkit-scrollbar-thumb {
+            background: var(--chep-blue);
+            border-radius: 8px;
+            border: 3px solid var(--bg-tertiary);
+            min-height: 60px;
+        }
+
+        .modal-body::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-hover);
+            cursor: grab;
+        }
+
+        .modal-body::-webkit-scrollbar-thumb:active {
+            cursor: grabbing;
+        }
+
+        /* Firefox scrollbar */
+        .modal-body {
+            scrollbar-width: auto;
+            scrollbar-color: var(--chep-blue) var(--bg-tertiary);
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--chep-dark-blue);
+            margin: 0;
+        }
+
+        .modal-close {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            color: var(--text-secondary);
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover {
+            background: var(--bg-hover);
+            color: var(--text-primary);
+        }
+
+        /* Power App Modal */
+        .powerapp-modal-content {
+            background: var(--bg-primary);
+            border-radius: 12px;
+            border: none;
+            width: 90%;
+            max-width: 700px;
+            aspect-ratio: 4 / 3;
+            max-height: calc(100vh - 48px);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 25px 50px rgba(10, 20, 45, 0.25);
+            overflow: hidden;
+            margin-top: 24px;
+        }
+
+        .powerapp-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            background: var(--chep-blue);
+            flex-shrink: 0;
+            border: none;
+            box-shadow: none;
+        }
+
+        .powerapp-modal-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #ffffff;
+            margin: 0;
+        }
+
+        .powerapp-modal-close {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            color: #ffffff;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .powerapp-modal-close:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .powerapp-iframe-container {
+            flex: 1;
+            padding: 0;
+            overflow: hidden;
+            background: #ffffff;
+            border: none !important;
+            border-top: none !important;
+        }
+
+        .powerapp-iframe {
+            width: 100%;
+            height: 100%;
+            border: none !important;
+            display: block;
+            margin-top: -1px;
+        }
+
+        .modal-section {
+            margin-bottom: 12px;
+            padding: 12px 16px;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .modal-section.compact {
+            padding: 10px 16px;
+        }
+
+        .modal-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .modal-section-title {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+
+        .modal-description {
+            color: var(--text-primary);
+            line-height: 1.7;
+            font-size: 14px;
+        }
+
+        .modal-website {
+            margin-top: 12px;
+        }
+
+        .modal-status-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            font-size: 14px;
+            color: var(--text-primary);
+        }
+
+        .modal-status-row strong {
+            font-weight: 600;
+        }
+
+        .modal-section p {
+            margin: 0 0 8px 0;
+            font-size: 14px;
+            color: var(--text-primary);
+        }
+
+        .modal-section p:last-child {
+            margin-bottom: 0;
+        }
+
+        .modal-section p strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .modal-link {
+            color: var(--chep-blue);
+            text-decoration: none;
+        }
+
+        .modal-link:hover {
+            text-decoration: underline;
+        }
+
+        .modal-proficiency-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+        }
+
+        .modal-proficiency-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 10px;
+            background: var(--bg-primary);
+            border-radius: 6px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+
+        .modal-proficiency-label {
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        /* Available badge colors - match main browser badges */
+        .modal-proficiency-item.available.nlp {
+            background: #E7FAE8;
+            border-color: #c4e8c6;
+        }
+        .modal-proficiency-item.available.nlp .modal-proficiency-label {
+            color: #00B050;
+        }
+
+        .modal-proficiency-item.available.no-code {
+            background: #F1E6DF;
+            border-color: #e0cfc4;
+        }
+        .modal-proficiency-item.available.no-code .modal-proficiency-label {
+            color: #AD5321;
+        }
+
+        .modal-proficiency-item.available.low-code {
+            background: #E9EFFF;
+            border-color: #c4d4f4;
+        }
+        .modal-proficiency-item.available.low-code .modal-proficiency-label {
+            color: #3477F6;
+        }
+
+        .modal-proficiency-item.available.code-first {
+            background: #E7E4EA;
+            border-color: #d4d0d8;
+        }
+        .modal-proficiency-item.available.code-first .modal-proficiency-label {
+            color: #8F29FC;
+        }
+
+        /* Unavailable - greyed out */
+        .modal-proficiency-item.unavailable {
+            background: #f5f5f5;
+            border-color: #e0e0e0;
+        }
+        .modal-proficiency-item.unavailable .modal-proficiency-label {
+            color: #bbb;
+        }
+
+        /* TBD - slightly greyed */
+        .modal-proficiency-item.tbd {
+            background: #fafafa;
+            border-color: #e8e8e8;
+        }
+        .modal-proficiency-item.tbd .modal-proficiency-label {
+            color: #999;
+        }
+
+        .modal-legend {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .modal-legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .no-proficiency {
+            color: var(--text-muted);
+            font-size: 13px;
+            font-style: italic;
+        }
+
+        .modal-capabilities-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+
+        .modal-capability-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 12px;
+            background: var(--bg-primary);
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+
+        .modal-capability-name {
+            font-size: 13px;
+            color: var(--text-primary);
+        }
+
+        .results-count {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+        }
+
+        .results-count strong {
+            color: var(--text-primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 1100px) {
+            .filters-panel {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        @media (max-width: 800px) {
+            .filters-panel {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .cards-container.active {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 500px) {
+            .filters-panel {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-bar {
+                flex-wrap: wrap;
+                gap: 16px;
+            }
+
+            .cards-container.active {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-capabilities-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-proficiency-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .tab-button {
+                padding: 12px 16px;
+                font-size: 13px;
+            }
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-tertiary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-muted);
+        }
+
+        /* Matrix container needs specific height for scrolling */
+        .matrix-wrapper {
+            max-height: 70vh;
+            overflow: auto;
+        }
+
+        .matrix-container.active {
+            display: block;
+        }
+
+        .matrix-container {
+            display: none;
+        }
+
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-secondary);
+        }
+
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+
+        .empty-state-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Main Tab Bar -->
+        <div class="tab-bar">
+            <button class="tab-button active" onclick="openPowerAppModal(this)">
+                Request a new tool
+            </button>
+        </div>
+
+        <!-- Tab Panel: Capability Browser -->
+        <div class="tab-panel active" id="panel-browser">
+            <div class="browser-content">
+                <div class="filters-panel">
+                    <div class="filter-group">
+                        <label class="filter-label">Technical Proficiency</label>
+                        <div class="multi-select" id="proficiency-multiselect">
+                            <button type="button" class="multi-select-trigger" onclick="toggleMultiSelect('proficiency-multiselect')">All interface types</button>
+                            <div class="multi-select-dropdown">
+                                <div class="multi-select-option">
+                                    <input type="checkbox" id="prof-nlp" value="nlp" onchange="updateMultiSelect('proficiency-multiselect')">
+                                    <label for="prof-nlp">Natural Language</label>
+                                </div>
+                                <div class="multi-select-option">
+                                    <input type="checkbox" id="prof-noCode" value="noCode" onchange="updateMultiSelect('proficiency-multiselect')">
+                                    <label for="prof-noCode">No-Code</label>
+                                </div>
+                                <div class="multi-select-option">
+                                    <input type="checkbox" id="prof-lowCode" value="lowCode" onchange="updateMultiSelect('proficiency-multiselect')">
+                                    <label for="prof-lowCode">Low-Code</label>
+                                </div>
+                                <div class="multi-select-option">
+                                    <input type="checkbox" id="prof-codeFirst" value="codeFirst" onchange="updateMultiSelect('proficiency-multiselect')">
+                                    <label for="prof-codeFirst">Code-First</label>
+                                </div>
+                                <div class="multi-select-clear" onclick="clearMultiSelect('proficiency-multiselect')">Clear selection</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label">Job Family</label>
+                        <div class="single-select" id="jobfamily-select">
+                            <button type="button" class="single-select-trigger" onclick="toggleSingleSelect('jobfamily-select')">All Job Families</button>
+                            <div class="single-select-dropdown">
+                                <div class="single-select-option selected" data-value="" onclick="selectSingleOption('jobfamily-select', '', 'All Job Families')">All Job Families</div>
+                                <div class="single-select-option" data-value="Data Science & Machine Learning" onclick="selectSingleOption('jobfamily-select', 'Data Science & Machine Learning', 'Data Science & Machine Learning')">Data Science & Machine Learning</div>
+                                <div class="single-select-option" data-value="Data Engineering" onclick="selectSingleOption('jobfamily-select', 'Data Engineering', 'Data Engineering')">Data Engineering</div>
+                                <div class="single-select-option" data-value="Visualisation Engineering" onclick="selectSingleOption('jobfamily-select', 'Visualisation Engineering', 'Visualisation Engineering')">Visualisation Engineering</div>
+                                <div class="single-select-option" data-value="Data & Insights Analysis" onclick="selectSingleOption('jobfamily-select', 'Data & Insights Analysis', 'Data & Insights Analysis')">Data & Insights Analysis</div>
+                                <div class="single-select-option" data-value="Software Development" onclick="selectSingleOption('jobfamily-select', 'Software Development', 'Software Development')">Software Development</div>
+                                <div class="single-select-option" data-value="Robotic Process Engineering (RPA)" onclick="selectSingleOption('jobfamily-select', 'Robotic Process Engineering (RPA)', 'Robotic Process Engineering (RPA)')">Robotic Process Engineering (RPA)</div>
+                                <div class="single-select-option" data-value="Product Management" onclick="selectSingleOption('jobfamily-select', 'Product Management', 'Product Management')">Product Management</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label">Capability Family</label>
+                        <div class="multi-select" id="capability-multiselect">
+                            <button type="button" class="multi-select-trigger" onclick="toggleMultiSelect('capability-multiselect')">All Capabilities</button>
+                            <div class="multi-select-dropdown" id="capability-dropdown">
+                                <!-- Options populated by JavaScript -->
+                                <div class="multi-select-clear" onclick="clearMultiSelect('capability-multiselect')">Clear selection</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label">Search Tools</label>
+                        <input type="text" class="filter-input" id="search-input" placeholder="Search by tool name...">
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label">License Type</label>
+                        <div class="single-select" id="license-select">
+                            <button type="button" class="single-select-trigger" onclick="toggleSingleSelect('license-select')">All Types</button>
+                            <div class="single-select-dropdown">
+                                <div class="single-select-option selected" data-value="" onclick="selectSingleOption('license-select', '', 'All Types')">All Types</div>
+                                <div class="single-select-option" data-value="Commercial" onclick="selectSingleOption('license-select', 'Commercial', 'Commercial')">Commercial</div>
+                                <div class="single-select-option" data-value="Open-source" onclick="selectSingleOption('license-select', 'Open-source', 'Open Source')">Open Source</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label">Overlap Clusters</label>
+                        <div class="single-select" id="cluster-select">
+                            <button type="button" class="single-select-trigger" onclick="toggleSingleSelect('cluster-select')">All</button>
+                            <div class="single-select-dropdown" id="cluster-dropdown">
+                                <div class="single-select-option selected" data-value="" onclick="selectSingleOption('cluster-select', '', 'All')">All</div>
+                                <div class="single-select-option" data-value="none" onclick="selectSingleOption('cluster-select', 'none', 'None')">None</div>
+                                <!-- Additional options populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label">View</label>
+                        <div class="view-tabs">
+                            <button class="view-tab active" data-view="cards" onclick="switchView('cards')">Card</button>
+                            <button class="view-tab" data-view="matrix" onclick="switchView('matrix')">Matrix</button>
+                        </div>
+                    </div>
+                    <div class="filter-group" style="margin-left: 8px;">
+                        <label class="filter-label">&nbsp;</label>
+                        <button class="reset-btn" onclick="resetFilters()">Reset</button>
+                    </div>
+                </div>
+
+                <div class="results-count">
+                    Showing <strong id="filtered-count">0</strong> of <strong id="total-count">0</strong> tools
+                </div>
+
+                <!-- Cards View -->
+                <div class="cards-container active" id="cards-view"></div>
+
+                <!-- Matrix View -->
+                <div class="matrix-container" id="matrix-view">
+                    <div class="matrix-wrapper">
+                        <table class="matrix-table" id="matrix-table">
+                            <thead id="matrix-head"></thead>
+                            <tbody id="matrix-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Stats Bar (Bottom) -->
+                <div class="stats-bar" style="margin-top: 24px;">
+                    <div class="stat-item">
+                        <span class="stat-value" id="total-tools">0</span>
+                        <span class="stat-label">Tools</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="total-capabilities">26</span>
+                        <span class="stat-label">Capability Families</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="commercial-count">0</span>
+                        <span class="stat-label">Commercial</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="opensource-count">0</span>
+                        <span class="stat-label">Open Source</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="proficiency-mapped">0</span>
+                        <span class="stat-label">Technical Proficiency Mapped</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab Panel: Power App -->
+        <div class="tab-panel" id="panel-powerapp">
+            <div class="powerapp-panel">
+                <!-- 
+                    ============================================================
+                    POWER APP INTEGRATION
+                    ============================================================
+                    
+                    Replace the placeholder below with your Power App iframe.
+                    
+                    To get your Power App embed URL:
+                    1. Go to Power Apps (make.powerapps.com)
+                    2. Select your app
+                    3. Click "..." → "Details" 
+                    4. Copy the "Web link" 
+                    
+                    Then replace the powerapp-placeholder div with:
+                    
+                    <iframe 
+                        src="https://apps.powerapps.com/play/e/YOUR-APP-ID?tenantId=YOUR-TENANT-ID"
+                        class="powerapp-container"
+                        frameborder="0"
+                        allowfullscreen>
+                    </iframe>
+                    
+                    ============================================================
+                -->
+                <iframe 
+                    src="https://apps.powerapps.com/play/e/default-7c4f77bb-bc61-4789-8aca-54aa04ebb634/a/294c5c07-cc11-4ab4-aea7-b9215f7726bf?tenantId=7c4f77bb-bc61-4789-8aca-54aa04ebb634&hint=02cab763-4c70-4c89-9c64-25cd14f30d23&sourcetime=1769797160490"
+                    class="powerapp-container"
+                    frameborder="0"
+                    allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tool Detail Modal -->
+    <div class="modal-overlay" id="tool-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modal-title">Tool Name</h2>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-section">
+                    <h3 class="modal-section-title">Description</h3>
+                    <p class="modal-description" id="modal-description"></p>
+                    <p class="modal-website"><a class="modal-link" id="modal-url" href="#" target="_blank"></a></p>
+                    <p class="modal-website"><strong>LeanIX:</strong> <a class="modal-link" id="modal-leanix" href="#" target="_blank"></a></p>
+                </div>
+                <div class="modal-section compact">
+                    <h3 class="modal-section-title">Status</h3>
+                    <div class="modal-status-row">
+                        <span><strong>Cluster:</strong> <span id="modal-cluster"></span></span>
+                        <span><strong>Target state</strong> <span id="modal-time"></span><span id="modal-target-date-wrapper"> <strong>By:</strong> <span id="modal-target-date"></span></span></span>
+                        <span><strong>License:</strong> <span id="modal-license"></span></span>
+                    </div>
+                </div>
+                <div class="modal-section compact">
+                    <h3 class="modal-section-title">Interface Types Supported</h3>
+                    <div class="modal-proficiency-grid" id="modal-proficiency"></div>
+                </div>
+                <div class="modal-section">
+                    <h3 class="modal-section-title">Capabilities Supported by This Tool</h3>
+                    <div class="modal-legend">
+                        <div class="modal-legend-item">
+                            <span class="support-badge support-0">0</span>
+                            <span>None</span>
+                        </div>
+                        <div class="modal-legend-item">
+                            <span class="support-badge support-1">1</span>
+                            <span>Limited</span>
+                        </div>
+                        <div class="modal-legend-item">
+                            <span class="support-badge support-2">2</span>
+                            <span>Partial</span>
+                        </div>
+                        <div class="modal-legend-item">
+                            <span class="support-badge support-3">3</span>
+                            <span>Full</span>
+                        </div>
+                    </div>
+                    <div class="modal-capabilities-grid" id="modal-capabilities"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Power App Modal -->
+    <div class="modal-overlay" id="powerapp-modal">
+        <div class="powerapp-modal-content">
+            <div class="powerapp-modal-header">
+                <h2 class="powerapp-modal-title">Request a New Tool</h2>
+                <button class="powerapp-modal-close" onclick="closePowerAppModal()">&times;</button>
+            </div>
+            <div class="powerapp-iframe-container">
+                <iframe 
+                    class="powerapp-iframe" 
+                    src="https://apps.powerapps.com/play/294c5c07-cc11-4ab4-aea7-b9215f7726bf?source=iframe"
+                    allow="geolocation; microphone; camera; fullscreen;"
+                    sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox"
+                    frameborder="0"
+                ></iframe>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Capability names in order
+        const CAPABILITY_NAMES = [
+            "Advanced Visualisation Techniques",
+            "AI Application Development",
+            "Business Intelligence Analysis",
+            "Computer Vision Applications",
+            "Dashboard & Report Development",
+            "Data Ingestion & Processing",
+            "Data Modelling & Schema",
+            "Data Product Design & User Experience",
+            "Data Product Development",
+            "Data Product Operations & Support",
+            "Data Transformation & Quality",
+            "Decision Support Systems",
+            "Forecasting & Planning",
+            "Governance & Compliance",
+            "LLM Development & Operations",
+            "Machine Learning Development",
+            "Model Deployment & Serving",
+            "Model Lifecycle Management",
+            "Modelling Governance",
+            "Pattern Recognition & Anomaly Detection",
+            "Process Management",
+            "SQL & Code Optimisation",
+            "Specialised ML Applications",
+            "Specialised Visualisation Applications",
+            "Data Observability",
+            "Process Automation"
+        ];
+
+        const SUPPORT_LABELS = {
+            0: "None",
+            1: "Limited",
+            2: "Partial",
+            3: "Full"
+        };
+
+        const PROFICIENCY_LABELS = {
+            nlp: "Natural Language",
+            noCode: "No-Code",
+            lowCode: "Low-Code",
+            codeFirst: "Code-First"
+        };
+
+        const PROFICIENCY_ICONS = {
+            nlp: "💬",
+            noCode: "🖱️",
+            lowCode: "⚙️",
+            codeFirst: "💻"
+        };
+
+        // TIME Status values (Gartner TIME framework)
+        const TIME_VALUES = ['TOLERATE', 'INVEST', 'MIGRATE', 'ELIMINATE'];
+        
+        // Display text mapping for TIME values
+        const TIME_DISPLAY = {
+            'TOLERATE': 'TOLERATE',
+            'INVEST': 'INVEST',
+            'MIGRATE': 'MIGRATE',
+            'ELIMINATE': 'ELIMINATE'
+        };
+        
+        // Function to get display text for TIME status
+        function getTimeDisplayText(timeStatus) {
+            return TIME_DISPLAY[timeStatus] || timeStatus;
+        }
+        
+        // Function to get target date from CSV data (with fallback to generated)
+        function getTargetDate(toolName) {
+            const tool = TOOLS_DATA.find(t => t.name === toolName);
+            if (tool && tool.targetDate) {
+                return tool.targetDate;
+            }
+            // Fallback: generate based on tool name hash
+            let hash = 0;
+            for (let i = 0; i < toolName.length; i++) {
+                hash = ((hash << 6) - hash) + toolName.charCodeAt(i);
+                hash = hash & hash;
+            }
+            const month = (Math.abs(hash) % 12) + 1;
+            const year = 2025 + (Math.abs(hash >> 4) % 4);
+            return `${month.toString().padStart(2, '0')}/${year}`;
+        }
+        
+        // Function to get LeanIX URL from CSV data
+        function getLeanIxUrl(toolName) {
+            const tool = TOOLS_DATA.find(t => t.name === toolName);
+            return tool ? tool.leanIxUrl : '';
+        }
+        
+        // LeanIX logo image (base64 encoded)
+        const LEANIX_IMAGE_BASE64 = 'data:image/webp;base64,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';
+        
+        // Job Family values
+        const JOB_FAMILIES = [
+            'Data Science & Machine Learning',
+            'Data Engineering',
+            'Visualisation Engineering',
+            'Data & Insights Analysis',
+            'Software Development',
+            'Robotic Process Engineering (RPA)',
+            'Product Management'
+        ];
+        
+        // Functions to get TIME status and Job Family from tool data
+        // These now read from the CSV data instead of generating randomly
+        function getTimeStatus(toolName) {
+            const tool = TOOLS_DATA.find(t => t.name === toolName);
+            return tool ? tool.timeStatus : 'TBD';
+        }
+
+        function getJobFamily(toolName) {
+            const tool = TOOLS_DATA.find(t => t.name === toolName);
+            return tool ? tool.jobFamily : '';
+        }
+
+        // Function to get Consolidation Cluster for a tool
+        function getCluster(toolName) {
+            const tool = TOOLS_DATA.find(t => t.name === toolName);
+            return tool ? tool.cluster : '';
+        }
+
+        // Get list of all unique clusters for filter dropdown
+        function getUniqueClusters() {
+            const clusters = new Set();
+            TOOLS_DATA.forEach(tool => {
+                if (tool.cluster) clusters.add(tool.cluster);
+            });
+            return Array.from(clusters).sort();
+        }
+
+        // Tool data - will be loaded from CSV
+        let TOOLS_DATA = [];
+
+        // CSV column mapping for capabilities (in order)
+        const CAPABILITY_COLUMNS = [
+            'cap_advanced_visualisation_techniques',
+            'cap_ai_application_development',
+            'cap_business_intelligence_analysis',
+            'cap_computer_vision_applications',
+            'cap_dashboard_report_development',
+            'cap_data_ingestion_processing',
+            'cap_data_modelling_schema',
+            'cap_data_product_design_user_experience',
+            'cap_data_product_development',
+            'cap_data_product_operations_support',
+            'cap_data_transformation_quality',
+            'cap_decision_support_systems',
+            'cap_forecasting_planning',
+            'cap_governance_compliance',
+            'cap_llm_development_operations',
+            'cap_machine_learning_development',
+            'cap_model_deployment_serving',
+            'cap_model_lifecycle_management',
+            'cap_modelling_governance',
+            'cap_pattern_recognition_anomaly_detection',
+            'cap_process_management',
+            'cap_sql_code_optimisation',
+            'cap_specialised_ml_applications',
+            'cap_specialised_visualisation_applications',
+            'cap_data_observability',
+            'cap_process_automation'
+        ];
+
+        // Function to parse CSV row into tool object
+        function parseToolFromCSV(row) {
+            // Parse proficiency values
+            const parseProficiency = (val) => {
+                if (val === 'TRUE') return true;
+                if (val === 'FALSE') return false;
+                return null; // TBD
+            };
+
+            // Parse capabilities array
+            const capabilities = CAPABILITY_COLUMNS.map(col => parseInt(row[col]) || 0);
+
+            return {
+                name: row.tool_name,
+                status: row.license_type,
+                description: row.description,
+                url: row.url,
+                timeStatus: row.time_status,
+                targetDate: row.target_date || '',
+                leanIxUrl: row.lean_ix || '',
+                jobFamily: row.job_family,
+                cluster: row.cluster || '',
+                capabilities: capabilities,
+                proficiency: {
+                    nlp: parseProficiency(row.prof_nlp),
+                    noCode: parseProficiency(row.prof_no_code),
+                    lowCode: parseProficiency(row.prof_low_code),
+                    codeFirst: parseProficiency(row.prof_code_first)
+                }
+            };
+        }
+
+        // Load data from CSV file
+        function loadToolsData() {
+            return new Promise((resolve, reject) => {
+                // Try to load from same directory as HTML file
+                const csvPath = 'tools_data.csv';
+                
+                Papa.parse(csvPath, {
+                    download: true,
+                    header: true,
+                    skipEmptyLines: true,
+                    complete: function(results) {
+                        if (results.errors.length > 0) {
+                            console.warn('CSV parsing warnings:', results.errors);
+                        }
+                        TOOLS_DATA = results.data.map(parseToolFromCSV);
+                        console.log(`Loaded ${TOOLS_DATA.length} tools from CSV`);
+                        resolve(TOOLS_DATA);
+                    },
+                    error: function(error) {
+                        console.error('Error loading CSV:', error);
+                        reject(error);
+                    }
+                });
+            });
+        }
+
+        // State
+        let filteredTools = [];
+        let currentView = 'cards';
+        let powerAppLoaded = false;
+
+        // Initialize - load CSV first, then set up UI
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                // Show loading state
+                document.getElementById('cards-view').innerHTML = '<div style="text-align: center; padding: 40px; color: var(--text-muted);">Loading tools data...</div>';
+                
+                // Load data from CSV
+                await loadToolsData();
+                
+                // Initialize UI after data is loaded
+                filteredTools = [...TOOLS_DATA];
+                populateCapabilityFilter();
+                populateClusterFilter();
+                updateStats();
+                applyFilters();
+            } catch (error) {
+                console.error('Failed to load tools data:', error);
+                document.getElementById('cards-view').innerHTML = '<div style="text-align: center; padding: 40px; color: #991B1B;">Error loading tools data. Please check that tools_data.csv is in the same directory.</div>';
+            }
+        });
+
+        // Main Tab Switching
+        function switchMainTab(tabName) {
+            // Update tab buttons
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.tab === tabName);
+            });
+
+            // Update panels
+            document.querySelectorAll('.tab-panel').forEach(panel => {
+                panel.classList.remove('active');
+            });
+            document.getElementById('panel-' + tabName).classList.add('active');
+
+            // Lazy load Power App iframe on first visit
+            if (tabName === 'powerapp' && !powerAppLoaded) {
+                // Uncomment and modify this when you have your Power App URL:
+                // loadPowerApp('https://apps.powerapps.com/play/e/YOUR-APP-ID?tenantId=YOUR-TENANT');
+                powerAppLoaded = true;
+            }
+        }
+
+        function loadPowerApp(url) {
+            const container = document.querySelector('.powerapp-panel');
+            container.innerHTML = `
+                <iframe 
+                    src="${url}"
+                    class="powerapp-container"
+                    frameborder="0"
+                    allowfullscreen>
+                </iframe>
+            `;
+        }
+
+        function populateCapabilityFilter() {
+            const dropdown = document.getElementById('capability-dropdown');
+            const clearBtn = dropdown.querySelector('.multi-select-clear');
+            
+            CAPABILITY_NAMES.forEach((name, index) => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'multi-select-option';
+                optionDiv.innerHTML = `
+                    <input type="checkbox" id="cap-${index}" value="${index}" onchange="updateMultiSelect('capability-multiselect')">
+                    <label for="cap-${index}">${name}</label>
+                `;
+                dropdown.insertBefore(optionDiv, clearBtn);
+            });
+        }
+
+        // Multi-select functions
+        function toggleMultiSelect(id) {
+            const multiSelect = document.getElementById(id);
+            const wasOpen = multiSelect.classList.contains('open');
+            
+            // Close all other multi-selects
+            document.querySelectorAll('.multi-select.open').forEach(ms => {
+                ms.classList.remove('open');
+            });
+            
+            // Toggle this one
+            if (!wasOpen) {
+                multiSelect.classList.add('open');
+            }
+        }
+
+        function updateMultiSelect(id) {
+            const multiSelect = document.getElementById(id);
+            const checkboxes = multiSelect.querySelectorAll('input[type="checkbox"]:checked');
+            const trigger = multiSelect.querySelector('.multi-select-trigger');
+            
+            if (checkboxes.length === 0) {
+                trigger.textContent = id === 'proficiency-multiselect' ? 'All interface types' : 'All Capabilities';
+            } else if (checkboxes.length === 1) {
+                const label = multiSelect.querySelector(`label[for="${checkboxes[0].id}"]`);
+                trigger.textContent = label.textContent;
+            } else {
+                trigger.textContent = `${checkboxes.length} selected`;
+            }
+            
+            applyFilters();
+        }
+
+        function clearMultiSelect(id) {
+            const multiSelect = document.getElementById(id);
+            multiSelect.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+                cb.checked = false;
+            });
+            updateMultiSelect(id);
+        }
+
+        function getMultiSelectValues(id) {
+            const multiSelect = document.getElementById(id);
+            const checkboxes = multiSelect.querySelectorAll('input[type="checkbox"]:checked');
+            return Array.from(checkboxes).map(cb => cb.value);
+        }
+
+        // Single-select functions
+        function toggleSingleSelect(id) {
+            const singleSelect = document.getElementById(id);
+            const wasOpen = singleSelect.classList.contains('open');
+            
+            // Close all other single-selects and multi-selects
+            document.querySelectorAll('.single-select.open, .multi-select.open').forEach(s => {
+                s.classList.remove('open');
+            });
+            
+            // Toggle this one
+            if (!wasOpen) {
+                singleSelect.classList.add('open');
+            }
+        }
+
+        function selectSingleOption(id, value, label) {
+            const singleSelect = document.getElementById(id);
+            const trigger = singleSelect.querySelector('.single-select-trigger');
+            
+            // Update selected state
+            singleSelect.querySelectorAll('.single-select-option').forEach(opt => {
+                opt.classList.remove('selected');
+                if (opt.dataset.value === value) {
+                    opt.classList.add('selected');
+                }
+            });
+            
+            // Update trigger text
+            trigger.textContent = label;
+            
+            // Store selected value
+            singleSelect.dataset.value = value;
+            
+            // Close dropdown
+            singleSelect.classList.remove('open');
+            
+            // Apply filters
+            applyFilters();
+        }
+
+        function getSingleSelectValue(id) {
+            const singleSelect = document.getElementById(id);
+            return singleSelect.dataset.value || '';
+        }
+
+        function resetSingleSelect(id, defaultLabel) {
+            const singleSelect = document.getElementById(id);
+            const trigger = singleSelect.querySelector('.single-select-trigger');
+            
+            singleSelect.querySelectorAll('.single-select-option').forEach(opt => {
+                opt.classList.remove('selected');
+                if (opt.dataset.value === '') {
+                    opt.classList.add('selected');
+                }
+            });
+            
+            trigger.textContent = defaultLabel;
+            singleSelect.dataset.value = '';
+        }
+
+        // Close multi-selects and single-selects when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.multi-select') && !e.target.closest('.single-select')) {
+                document.querySelectorAll('.multi-select.open, .single-select.open').forEach(ms => {
+                    ms.classList.remove('open');
+                });
+            }
+        });
+
+        // Close multi-selects and single-selects when pressing ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.multi-select.open, .single-select.open').forEach(ms => {
+                    ms.classList.remove('open');
+                });
+            }
+        });
+
+        function updateStats() {
+            const commercialCount = TOOLS_DATA.filter(t => t.status === 'Commercial').length;
+            const opensourceCount = TOOLS_DATA.filter(t => t.status === 'Open-source').length;
+            const proficiencyMapped = TOOLS_DATA.filter(t => {
+                const p = t.proficiency;
+                return p.nlp !== null || p.noCode !== null || p.lowCode !== null || p.codeFirst !== null;
+            }).length;
+            
+            document.getElementById('total-tools').textContent = TOOLS_DATA.length;
+            document.getElementById('commercial-count').textContent = commercialCount;
+            document.getElementById('opensource-count').textContent = opensourceCount;
+            document.getElementById('total-count').textContent = TOOLS_DATA.length;
+            document.getElementById('proficiency-mapped').textContent = proficiencyMapped;
+        }
+
+        function applyFilters() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            const selectedCapabilities = getMultiSelectValues('capability-multiselect');
+            const jobFamily = getSingleSelectValue('jobfamily-select');
+            const licenseType = getSingleSelectValue('license-select');
+            const selectedProficiencies = getMultiSelectValues('proficiency-multiselect');
+            const clusterFilter = getSingleSelectValue('cluster-select');
+
+            filteredTools = TOOLS_DATA.filter(tool => {
+                if (searchTerm && !tool.name.toLowerCase().includes(searchTerm)) {
+                    return false;
+                }
+                if (licenseType && tool.status !== licenseType) {
+                    return false;
+                }
+                if (jobFamily && getJobFamily(tool.name) !== jobFamily) {
+                    return false;
+                }
+                if (clusterFilter) {
+                    const toolCluster = getCluster(tool.name);
+                    if (clusterFilter === 'none') {
+                        // Filter for tools NOT in any cluster
+                        if (toolCluster !== '') {
+                            return false;
+                        }
+                    } else {
+                        // Filter for specific cluster
+                        if (toolCluster !== clusterFilter) {
+                            return false;
+                        }
+                    }
+                }
+                // Proficiency filter - tool must support AT LEAST ONE of the selected modes (OR logic)
+                if (selectedProficiencies.length > 0) {
+                    const hasAnyProficiency = selectedProficiencies.some(mode => tool.proficiency[mode] === true);
+                    if (!hasAnyProficiency) {
+                        return false;
+                    }
+                }
+                // Capability filter - tool must support ALL selected capabilities (AND logic)
+                if (selectedCapabilities.length > 0) {
+                    const hasAllCapabilities = selectedCapabilities.every(capIndex => {
+                        return tool.capabilities[parseInt(capIndex)] > 0;
+                    });
+                    if (!hasAllCapabilities) {
+                        return false;
+                    }
+                }
+                return true;
+            });
+
+            document.getElementById('filtered-count').textContent = filteredTools.length;
+            renderCurrentView();
+        }
+
+        function renderProficiencyBadges(proficiency) {
+            const badges = [];
+            
+            if (proficiency.nlp === true) {
+                badges.push(`<span class="proficiency-badge nlp">Natural Language</span>`);
+            }
+            if (proficiency.noCode === true) {
+                badges.push(`<span class="proficiency-badge no-code">No-Code</span>`);
+            }
+            if (proficiency.lowCode === true) {
+                badges.push(`<span class="proficiency-badge low-code">Low-Code</span>`);
+            }
+            if (proficiency.codeFirst === true) {
+                badges.push(`<span class="proficiency-badge code-first">Code-First</span>`);
+            }
+            
+            const allNull = Object.values(proficiency).every(v => v === null);
+            if (allNull) {
+                badges.push(`<span class="proficiency-badge tbd">TBD</span>`);
+            }
+            
+            if (badges.length === 0) {
+                const hasAnyTrue = Object.values(proficiency).some(v => v === true);
+                if (!hasAnyTrue) {
+                    if (proficiency.nlp === null) badges.push(`<span class="proficiency-badge tbd" title="Natural Language: TBD">?</span>`);
+                }
+            }
+
+            return badges.join('');
+        }
+
+        function renderCurrentView() {
+            if (currentView === 'cards') {
+                renderCardsView();
+            } else {
+                renderMatrixView();
+            }
+        }
+
+        function renderCardsView() {
+            const container = document.getElementById('cards-view');
+            
+            if (filteredTools.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">🔍</div>
+                        <div class="empty-state-title">No tools match your filters</div>
+                        <p>Try adjusting your search criteria or reset filters</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = filteredTools.map(tool => {
+                const timeStatus = getTimeStatus(tool.name);
+                const timeDisplayText = getTimeDisplayText(timeStatus);
+                const targetDate = getTargetDate(tool.name);
+                const cluster = getCluster(tool.name);
+                const leanIxUrl = getLeanIxUrl(tool.name);
+                const leanIxBadge = leanIxUrl 
+                    ? `<a href="${leanIxUrl}" target="_blank" class="leanix-badge active" onclick="event.stopPropagation();" title="View in LeanIX"><img src="${LEANIX_IMAGE_BASE64}" alt="LeanIX"></a>`
+                    : `<span class="leanix-badge inactive" title="No LeanIX entry"><img src="${LEANIX_IMAGE_BASE64}" alt="LeanIX"></span>`;
+
+                return `
+                    <div class="tool-card" onclick="openToolModal('${tool.name.replace(/'/g, "\\'")}', this)">
+                        <div class="tool-card-leanix">${leanIxBadge}</div>
+                        <div class="tool-card-header">
+                            <span class="tool-card-title">${tool.name}</span>
+                        </div>
+                        <div class="tool-card-proficiency">
+                            ${renderProficiencyBadges(tool.proficiency)}
+                        </div>
+                        <p class="tool-card-description">${tool.description}</p>
+                        <div class="tool-card-footer">
+                            <div class="tool-card-cluster">
+                                <span class="tool-card-cluster-label">Cluster: </span>
+                                <span class="tool-card-cluster-value ${cluster ? '' : 'not-clustered'}">${cluster ? cluster : 'None'}</span>
+                            </div>
+                            <div class="tool-card-cluster">
+                                <span class="tool-card-cluster-label">Target state </span>
+                                <span class="time-badge time-${timeStatus.toLowerCase()}">${timeDisplayText}</span>
+                                ${(timeStatus !== 'TOLERATE' && timeStatus !== 'INVEST') ? `<span class="tool-card-target-date"><span class="tool-card-target-date-label">By:</span><span class="tool-card-target-date-value">${targetDate}</span></span>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderMatrixView() {
+            const thead = document.getElementById('matrix-head');
+            const tbody = document.getElementById('matrix-body');
+
+            thead.innerHTML = `
+                <tr>
+                    <th class="tool-header">Tool</th>
+                    <th class="proficiency-header">Technical Proficiency</th>
+                    ${CAPABILITY_NAMES.map(name => `<th class="capability-header" title="${name}">${name}</th>`).join('')}
+                </tr>
+            `;
+
+            if (filteredTools.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="${CAPABILITY_NAMES.length + 2}" style="text-align: center; padding: 40px; color: var(--text-secondary);">
+                            No tools match your filters
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = filteredTools.map(tool => `
+                <tr>
+                    <td class="tool-cell">
+                        <a class="tool-name-link" onclick="openToolModal('${tool.name.replace(/'/g, "\\'")}', this)">${tool.name}</a>
+                    </td>
+                    <td class="proficiency-cell">
+                        <div class="proficiency-badges">
+                            ${renderProficiencyBadges(tool.proficiency)}
+                        </div>
+                    </td>
+                    ${tool.capabilities.map(level => `
+                        <td style="text-align: center;">
+                            <span class="support-badge support-${level}" title="${SUPPORT_LABELS[level]}">${level}</span>
+                        </td>
+                    `).join('')}
+                </tr>
+            `).join('');
+        }
+
+        function switchView(view) {
+            currentView = view;
+            
+            document.querySelectorAll('.view-tab').forEach(tab => {
+                tab.classList.toggle('active', tab.dataset.view === view);
+            });
+
+            document.getElementById('cards-view').classList.toggle('active', view === 'cards');
+            document.getElementById('matrix-view').classList.toggle('active', view === 'matrix');
+
+            renderCurrentView();
+        }
+
+        function openToolModal(toolName, clickedElement) {
+            const tool = TOOLS_DATA.find(t => t.name === toolName);
+            if (!tool) return;
+
+            const timeStatus = getTimeStatus(tool.name);
+            const timeDisplayText = getTimeDisplayText(timeStatus);
+            const targetDate = getTargetDate(tool.name);
+            const cluster = getCluster(tool.name);
+
+            document.getElementById('modal-title').textContent = tool.name;
+            document.getElementById('modal-description').textContent = tool.description;
+            document.getElementById('modal-license').textContent = tool.status;
+            document.getElementById('modal-time').innerHTML = `<span class="time-badge time-${timeStatus.toLowerCase()}">${timeDisplayText}</span>`;
+            
+            const targetDateWrapper = document.getElementById('modal-target-date-wrapper');
+            if (timeStatus === 'TOLERATE' || timeStatus === 'INVEST') {
+                targetDateWrapper.style.display = 'none';
+            } else {
+                targetDateWrapper.style.display = 'inline';
+                document.getElementById('modal-target-date').textContent = targetDate;
+            }
+            
+            document.getElementById('modal-cluster').textContent = cluster ? cluster : 'None';
+            
+            const urlElement = document.getElementById('modal-url');
+            urlElement.href = tool.url;
+            urlElement.textContent = tool.url;
+
+            const leanixElement = document.getElementById('modal-leanix');
+            const leanixUrl = getLeanIxUrl(tool.name);
+            if (leanixUrl) {
+                leanixElement.href = leanixUrl;
+                leanixElement.textContent = 'View Factsheet';
+                leanixElement.style.display = '';
+            } else {
+                leanixElement.href = '#';
+                leanixElement.textContent = 'Not available';
+                leanixElement.style.display = '';
+            }
+
+            const proficiencyContainer = document.getElementById('modal-proficiency');
+            proficiencyContainer.innerHTML = Object.entries(tool.proficiency)
+                .filter(([key, value]) => value === true)  // Only show available proficiencies
+                .map(([key, value]) => {
+                    // Map key to badge class
+                    const badgeClassMap = {
+                        'nlp': 'nlp',
+                        'noCode': 'no-code',
+                        'lowCode': 'low-code',
+                        'codeFirst': 'code-first'
+                    };
+                    const badgeClass = badgeClassMap[key] || '';
+                    
+                    return `
+                        <div class="modal-proficiency-item available ${badgeClass}">
+                            <span class="modal-proficiency-label">${PROFICIENCY_LABELS[key]}</span>
+                        </div>
+                    `;
+                }).join('') || '<span class="no-proficiency">No interface types available</span>';
+
+            const capabilitiesContainer = document.getElementById('modal-capabilities');
+            capabilitiesContainer.innerHTML = CAPABILITY_NAMES.map((name, index) => `
+                <div class="modal-capability-item">
+                    <span class="modal-capability-name">${name}</span>
+                    <span class="support-badge support-${tool.capabilities[index]}">${tool.capabilities[index]}</span>
+                </div>
+            `).join('');
+
+            const modal = document.getElementById('tool-modal');
+            const modalBody = document.querySelector('#tool-modal .modal-body');
+            
+            // Position modal near the clicked element
+            if (clickedElement) {
+                const rect = clickedElement.getBoundingClientRect();
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop || 0;
+                // Position modal at the top of the clicked card
+                const modalTop = clickedElement.offsetTop;
+                modal.style.top = modalTop + 'px';
+                modal.style.minHeight = '600px';
+            } else {
+                modal.style.top = '0px';
+                modal.style.minHeight = '100%';
+            }
+            
+            // Reset modal body scroll
+            if (modalBody) {
+                modalBody.scrollTop = 0;
+            }
+            
+            // Show modal
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('tool-modal').classList.remove('active');
+        }
+
+        function openPowerAppModal(clickedElement) {
+            const modal = document.getElementById('powerapp-modal');
+            
+            // Position modal near the clicked element
+            if (clickedElement) {
+                const modalTop = clickedElement.offsetTop;
+                modal.style.top = modalTop + 'px';
+                modal.style.minHeight = '600px';
+            } else {
+                modal.style.top = '0px';
+                modal.style.minHeight = '100%';
+            }
+            
+            modal.classList.add('active');
+        }
+
+        function closePowerAppModal() {
+            document.getElementById('powerapp-modal').classList.remove('active');
+        }
+
+        function resetFilters() {
+            document.getElementById('search-input').value = '';
+            resetSingleSelect('jobfamily-select', 'All Job Families');
+            resetSingleSelect('license-select', 'All Types');
+            resetSingleSelect('cluster-select', 'All');
+            clearMultiSelect('proficiency-multiselect');
+            clearMultiSelect('capability-multiselect');
+        }
+
+        // Populate cluster filter dropdown
+        function populateClusterFilter() {
+            const dropdown = document.getElementById('cluster-dropdown');
+            const clusters = getUniqueClusters();
+            clusters.forEach(cluster => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'single-select-option';
+                optionDiv.dataset.value = cluster;
+                optionDiv.textContent = cluster;
+                optionDiv.onclick = function() {
+                    selectSingleOption('cluster-select', cluster, cluster);
+                };
+                dropdown.appendChild(optionDiv);
+            });
+        }
+
+        // Event listeners
+        document.getElementById('search-input').addEventListener('input', applyFilters);
+
+        document.getElementById('tool-modal').addEventListener('click', (e) => {
+            if (e.target.id === 'tool-modal') {
+                closeModal();
+            }
+        });
+
+        document.getElementById('powerapp-modal').addEventListener('click', (e) => {
+            if (e.target.id === 'powerapp-modal') {
+                closePowerAppModal();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+                closePowerAppModal();
+            }
+        });
+    </script>
+</body>
+</html>
