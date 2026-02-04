@@ -1,0 +1,396 @@
+tool_id,category,tool_name,availability,in_catalog,catalog_name
+104,Additional Analytics & Data Tools,AWS Clean Rooms (Secure data collaboration),C,N,
+105,Additional Analytics & Data Tools,AWS Entity Resolution (Identity resolution),C,N,
+106,Additional Analytics & Data Tools,AWS IoT Analytics,C,N,
+107,Additional Analytics & Data Tools,AWS Kinesis,C,Y,AWS Kinesis
+108,Additional Analytics & Data Tools,AWS MSK (Managed Streaming for Apache Kafka),C,N,
+100,Additional Analytics & Data Tools,Apache Airflow,O,N,
+101,Additional Analytics & Data Tools,Apache Druid,O,N,
+102,Additional Analytics & Data Tools,Apache Spark,O,N,
+103,Additional Analytics & Data Tools,Apache Superset,O,N,
+109,Additional Analytics & Data Tools,Azure Data Factory,C,N,
+110,Additional Analytics & Data Tools,Census (Reverse ETL),C,N,
+111,Additional Analytics & Data Tools,Confluent (Kafka platform),C,N,
+112,Additional Analytics & Data Tools,Dagster (Data orchestration),C/O,N,
+114,Additional Analytics & Data Tools,Hex (Data science platform),C,N,
+115,Additional Analytics & Data Tools,Hightouch (Reverse ETL),C,N,
+116,Additional Analytics & Data Tools,Metabase (BI tool),O,N,
+117,Additional Analytics & Data Tools,Mode Analytics,C,N,
+113,Additional Analytics & Data Tools,dbt Labs (Data transformation),C/O,N,
+200,Advanced Analytics & Machine Learning,Alteryx Designer,C,Y,Alteryx Designer
+202,Advanced Analytics & Machine Learning,Amazon Athena,C,N,
+201,Advanced Analytics & Machine Learning,Amazon QuickSight,C,N,
+204,Advanced Analytics & Machine Learning,Amazon Redshift,C,Y,AWS Redshift
+203,Advanced Analytics & Machine Learning,Amazon SageMaker,C,N,
+205,Advanced Analytics & Machine Learning,Anaconda Enterprise,C,N,
+206,Advanced Analytics & Machine Learning,BigML,C,N,
+209,Advanced Analytics & Machine Learning,DataIQ,C,N,
+210,Advanced Analytics & Machine Learning,DataRobot,C,N,
+207,Advanced Analytics & Machine Learning,Databricks,C,Y,Databricks Compute & Infrastructure
+221,Advanced Analytics & Machine Learning,Databricks Catalog and Data Access,C,Y,Databricks Catalog and Data Access
+222,Advanced Analytics & Machine Learning,Databricks Dashboards & Analytics,C,Y,Databricks Dashboards & Analytics
+223,Advanced Analytics & Machine Learning,Databricks ML & AI applications,C,Y,Databricks ML & AI applications
+224,Advanced Analytics & Machine Learning,Databricks Notebooks & Development,C,Y,Databricks Notebooks & Development
+225,Advanced Analytics & Machine Learning,Databricks Workflows and Orchestration,C,Y,Databricks Workflows and Orchestration
+208,Advanced Analytics & Machine Learning,Dataiku,C,Y,Dataiku
+211,Advanced Analytics & Machine Learning,Domino Data Lab,C,N,
+212,Advanced Analytics & Machine Learning,Google Vertex AI,C,N,
+213,Advanced Analytics & Machine Learning,H2O.ai,C/O,N,
+214,Advanced Analytics & Machine Learning,IBM Watson,C,N,
+215,Advanced Analytics & Machine Learning,KNIME,C/O,N,
+216,Advanced Analytics & Machine Learning,Minitab,C,N,
+217,Advanced Analytics & Machine Learning,RapidMiner,C,N,
+218,Advanced Analytics & Machine Learning,SAS,C,N,
+219,Advanced Analytics & Machine Learning,TIBCO Data Science,C,N,
+220,Advanced Analytics & Machine Learning,Wolfram Mathematica,C,N,
+300,Data Management & Governance,Alation (Data Catalog),C,N,
+301,Data Management & Governance,Amundsen (Lyft open source data discovery),O,N,
+302,Data Management & Governance,Ataccama (Ataccama ONE),C,N,
+303,Data Management & Governance,Atlan,C,N,
+304,Data Management & Governance,Axon Data Governance,C,N,
+305,Data Management & Governance,Cloudera (Cloudera Data Platform),C,N,
+306,Data Management & Governance,Collibra (Data Intelligence Platform),C,N,
+308,Data Management & Governance,DataHub (LinkedIn open source metadata platform),O,N,
+309,Data Management & Governance,Erwin (by Quest),C,N,
+310,Data Management & Governance,FirstEigen DataBuck,C,N,
+311,Data Management & Governance,IBM InfoSphere,C,N,
+312,Data Management & Governance,Informatica (Intelligent Data Management Cloud),C,N,
+313,Data Management & Governance,Metaphor (Modern data catalog platform),C,N,
+314,Data Management & Governance,Microsoft DQS,C,Y,Microsoft DQS
+315,Data Management & Governance,OneTrust DataGuidance,C,N,
+316,Data Management & Governance,OvalEdge,C,N,
+317,Data Management & Governance,Precisely (Data360 Govern),C,N,
+318,Data Management & Governance,SAP Master Data Governance,C,N,
+307,Data Management & Governance,data.world (Enterprise data catalog),C,N,
+400,Data Quality & Observability Tools,Acceldata (Data observability platform),C,N,
+401,Data Quality & Observability Tools,Anomalo (Data quality monitoring),C,N,
+402,Data Quality & Observability Tools,Bigeye (Data quality monitoring),C,N,
+403,Data Quality & Observability Tools,Datafold (Data diff tool),C,N,
+405,Data Quality & Observability Tools,Great Expectations,O,Y,Great Expectations
+406,Data Quality & Observability Tools,Lightup (Data quality platform),C,N,
+407,Data Quality & Observability Tools,Monte Carlo (Data observability platform),C,N,
+408,Data Quality & Observability Tools,Soda Data Observability,C,Y,Soda Data Observability
+409,Data Quality & Observability Tools,Validio (Data quality validation),C,N,
+404,Data Quality & Observability Tools,dbt Tests (Testing framework for data quality),O,N,
+500,Data Visualization & Business Intelligence,Board,C,N,
+520,Data Visualization & Business Intelligence,Brunner BI Measure Killer,C,Y,Brunner BI Measure Killer
+521,Data Visualization & Business Intelligence,DAX Studio,C,Y,DAX Studio
+501,Data Visualization & Business Intelligence,Deepnote (Data notebook platform),C,N,
+502,Data Visualization & Business Intelligence,Domo,C,N,
+503,Data Visualization & Business Intelligence,Dundas BI,C,N,
+504,Data Visualization & Business Intelligence,GoodData,C,N,
+505,Data Visualization & Business Intelligence,Google Looker (Looker Looker Studio),C,N,
+506,Data Visualization & Business Intelligence,Information Builders (WebFOCUS),C,N,
+507,Data Visualization & Business Intelligence,Logi Analytics,C,N,
+509,Data Visualization & Business Intelligence,MicroStrategy,C,N,
+522,Data Visualization & Business Intelligence,Microsoft PowerBI Dataflows (ETL),C,Y,Microsoft PowerBI Dataflows (ETL)
+508,Data Visualization & Business Intelligence,Microsoft PowerBI Desktop,C,Y,Microsoft PowerBI Desktop
+523,Data Visualization & Business Intelligence,Microsoft PowerBI Embedded,C,Y,Microsoft PowerBI Embedded
+524,Data Visualization & Business Intelligence,Microsoft PowerBI Gateway,C,Y,Microsoft PowerBI Gateway
+525,Data Visualization & Business Intelligence,Microsoft PowerBI Premium,C,Y,Microsoft PowerBI Premium
+526,Data Visualization & Business Intelligence,Microsoft PowerBI Pro,C,Y,Microsoft PowerBI Pro
+510,Data Visualization & Business Intelligence,Observable (Collaborative data visualization),C/O,N,
+511,Data Visualization & Business Intelligence,Plotly Dash Enterprise (Commercial Dash platform),C,N,
+512,Data Visualization & Business Intelligence,Qlik,C,Y,Qlik
+513,Data Visualization & Business Intelligence,RAWGraphs (Visual data framework),O,N,
+514,Data Visualization & Business Intelligence,Sigma Computing (Cloud-native analytics platform),C,N,
+515,Data Visualization & Business Intelligence,Sisense,C,N,
+516,Data Visualization & Business Intelligence,Tableau (Tableau Desktop Tableau Server Tableau Cloud),C,N,
+527,Data Visualization & Business Intelligence,Tabular Editor,C,Y,Tabular Editor
+517,Data Visualization & Business Intelligence,Thoughtspot Analytics,C,Y,Thoughtspot Analytics
+518,Data Visualization & Business Intelligence,Yellowfin,C,N,
+519,Data Visualization & Business Intelligence,Zoho Analytics,C,N,
+601,Database & Data Storage Solutions,AWS Aurora (MySQL/PostgreSQL compatible),C,Y,AWS Aurora MySQL
+628,Database & Data Storage Solutions,AWS Aurora Postgres SQL,C,Y,AWS Aurora Postgres SQL
+629,Database & Data Storage Solutions,AWS Cloudwatch,C,Y,AWS Cloudwatch
+602,Database & Data Storage Solutions,AWS DocumentDB (MongoDB compatible),C,N,
+603,Database & Data Storage Solutions,AWS DynamoDB,C,Y,AWS DynamoDB
+630,Database & Data Storage Solutions,AWS EC2 (instances and other),C,Y,AWS EC2 (instances and other)
+604,Database & Data Storage Solutions,AWS Neptune (Graph database),C,N,
+605,Database & Data Storage Solutions,AWS RDS,C,Y,AWS RDS
+607,Database & Data Storage Solutions,AWS Timestream (Time series database),C,N,
+606,Database & Data Storage Solutions,AWS s3 Data Storage,C,Y,AWS s3 Data Storage
+600,Database & Data Storage Solutions,Amazon OpenSearch,C,Y,AWS OpenSearch Service
+631,Database & Data Storage Solutions,Azure SQL Database,C,Y,Azure SQL Database
+608,Database & Data Storage Solutions,Cassandra,O,N,
+609,Database & Data Storage Solutions,ClickHouse,O,N,
+610,Database & Data Storage Solutions,CockroachDB,C/O,N,
+611,Database & Data Storage Solutions,Imply/Druid Cloud (Commercial Apache Druid),C,N,
+612,Database & Data Storage Solutions,InfluxDB,C/O,N,
+613,Database & Data Storage Solutions,MariaDB,O,N,
+614,Database & Data Storage Solutions,Microsoft SQL Server Core Licence,C,Y,Microsoft SQL Server Core Licence
+615,Database & Data Storage Solutions,MongoDB,C/O,N,
+616,Database & Data Storage Solutions,MySQL,O,N,
+617,Database & Data Storage Solutions,Neo4j,C/O,N,
+618,Database & Data Storage Solutions,Oracle Database,C,N,
+619,Database & Data Storage Solutions,PlanetScale (Serverless MySQL),C,N,
+620,Database & Data Storage Solutions,PostgreSQL,O,N,
+621,Database & Data Storage Solutions,QuestDB (Time series database),O,N,
+622,Database & Data Storage Solutions,Redis,C/O,N,
+623,Database & Data Storage Solutions,Rockset (Real-time analytics database),C,N,
+624,Database & Data Storage Solutions,SingleStore,C,N,
+625,Database & Data Storage Solutions,TigerGraph,C,N,
+626,Database & Data Storage Solutions,TimescaleDB (Time series database),C/O,N,
+627,Database & Data Storage Solutions,YugabyteDB (Distributed SQL),C/O,N,
+2100,Design & Collaboration Tools,Adobe Figma,C,Y,Adobe Figma
+2101,Design & Collaboration Tools,Atlassian Bitbucket,C,Y,Atlassian Bitbucket
+2102,Design & Collaboration Tools,Atlassian Compass,C,Y,Atlassian Compass
+2103,Design & Collaboration Tools,Atlassian Jira,C,Y,Atlassian Jira
+2104,Design & Collaboration Tools,Atlassian Jira Align,C,Y,Atlassian Jira Align
+2105,Design & Collaboration Tools,Atlassian Jira Product Discovery,C,Y,Atlassian Jira Product Discovery
+2106,Design & Collaboration Tools,Lucidchart,C,Y,Lucidchart
+2107,Design & Collaboration Tools,ManageEngine PAM360,C,Y,ManageEngine PAM360
+901,ETL & Data Integration,AWS AppFlow,C,N,
+902,ETL & Data Integration,AWS Glue,C,Y,AWS Glue
+900,ETL & Data Integration,Airbyte,C/O,N,
+921,ETL & Data Integration,CDataSoftware DBAmp,C,Y,CDataSoftware DBAmp
+903,ETL & Data Integration,CloverDX,C,N,
+904,ETL & Data Integration,Dell Boomi,C,Y,Dell Boomi
+905,ETL & Data Integration,Denodo,C,N,
+906,ETL & Data Integration,Fivetran,C,N,
+907,ETL & Data Integration,Hevo Data,C,N,
+908,ETL & Data Integration,Integrate.io,C,N,
+909,ETL & Data Integration,Keboola,C,N,
+910,ETL & Data Integration,Mage AI (Modern data pipeline tool),C/O,N,
+911,ETL & Data Integration,Matillion,C,N,
+912,ETL & Data Integration,Microsoft SQL Server Integration Service (SSIS),C,Y,Microsoft SQL Server Integration Service (SSIS)
+922,ETL & Data Integration,Precisely Winshuttle,C,Y,Precisely Winshuttle
+923,ETL & Data Integration,Salesforce Mulesoft,C,Y,Salesforce Mulesoft
+924,ETL & Data Integration,Simba Connector,C,Y,Simba Connector
+913,ETL & Data Integration,Skyvia,C,N,
+914,ETL & Data Integration,SnapLogic,C,N,
+915,ETL & Data Integration,Stitch,C,N,
+916,ETL & Data Integration,StreamSets,C,N,
+919,ETL & Data Integration,TIBCO (TIBCO Data Virtualization),C,N,
+917,ETL & Data Integration,Talend Open Studio,O,N,
+918,ETL & Data Integration,Theobald Software Xtract IS,C,Y,Theobald Software Xtract IS
+920,ETL & Data Integration,Trifacta,C,N,
+701,Enterprise & Cloud Analytics Platforms,AWS Starburst for EKS,C,Y,AWS Starburst for EKS
+700,Enterprise & Cloud Analytics Platforms,Astronomer (Commercial Airflow platform),C,N,
+702,Enterprise & Cloud Analytics Platforms,Databricks (Databricks Lakehouse Platform Delta Lake),C/O,Y,Databricks Compute & Infrastructure
+704,Enterprise & Cloud Analytics Platforms,Google Cloud (BigQuery Looker Vertex AI Dataplex),C,N,
+705,Enterprise & Cloud Analytics Platforms,IBM (Cognos Analytics Watson Studio watsonx.ai watsonx.data),C,N,
+706,Enterprise & Cloud Analytics Platforms,Materialize (Streaming SQL database),C/O,N,
+707,Enterprise & Cloud Analytics Platforms,Microsoft (Power BI Azure Synapse Analytics Fabric Purview),C,N,
+708,Enterprise & Cloud Analytics Platforms,Oracle (Oracle Analytics Cloud Oracle Data Integrator),C,N,
+709,Enterprise & Cloud Analytics Platforms,Presto/Trino (Distributed SQL query engine),O,N,
+711,Enterprise & Cloud Analytics Platforms,SAP Analytics Cloud,C,Y,SAP Analytics Cloud
+714,Enterprise & Cloud Analytics Platforms,SAP BW,C,Y,SAP BW
+715,Enterprise & Cloud Analytics Platforms,SAP GUI (Desktop),C,Y,SAP GUI (Desktop)
+712,Enterprise & Cloud Analytics Platforms,SAS (SAS Viya SAS Enterprise Miner SAS Visual Analytics),C,N,
+710,Enterprise & Cloud Analytics Platforms,Salesforce Einstein,C,Y,Salesforce Einstein
+713,Enterprise & Cloud Analytics Platforms,Snowflake (Snowflake Data Cloud Snowpark),C,N,
+703,Enterprise & Cloud Analytics Platforms,dbt Cloud (Commercial dbt platform by dbt Labs),C,N,
+800,Enterprise Knowledge Graphs,Amazon Neptune Analytics (Graph analytics),C,N,
+801,Enterprise Knowledge Graphs,AnzoGraph (Graph analytics platform),C,N,
+802,Enterprise Knowledge Graphs,GraphDB (Ontotext semantic database),C,N,
+803,Enterprise Knowledge Graphs,NebulaGraph (Distributed graph database),C/O,N,
+804,Enterprise Knowledge Graphs,Stardog (Enterprise knowledge graph),C,N,
+1000,Feature Stores & MLOps,Arize AI (ML observability platform),C,N,
+1001,Feature Stores & MLOps,BentoML (Model serving framework),O,N,
+1002,Feature Stores & MLOps,ClearML (MLOps platform),C/O,N,
+1003,Feature Stores & MLOps,Comet (ML experiment tracking),C,N,
+1004,Feature Stores & MLOps,EvidentlyAI,O,Y,EvidentlyAI
+1005,Feature Stores & MLOps,Feast (Open-source feature store),O,N,
+1006,Feature Stores & MLOps,Iguazio (MLOps platform),C,N,
+1007,Feature Stores & MLOps,Neptune.ai (Metadata store for MLOps),C,N,
+1008,Feature Stores & MLOps,Seldon Core (Model serving framework),O,N,
+1009,Feature Stores & MLOps,Tecton (Enterprise feature platform),C,N,
+1010,Feature Stores & MLOps,Weights & Biases (MLOps platform),C,N,
+1100,Generative AI & Text Analytics,AI21 Labs (Jurassic models),C,N,
+1103,Generative AI & Text Analytics,AWS Amazon Q (Generative AI assistant),C,N,
+1104,Generative AI & Text Analytics,AWS Bedrock (Foundation model service),C,N,
+1105,Generative AI & Text Analytics,AWS Comprehend (NLP service),C,N,
+1106,Generative AI & Text Analytics,AWS Kendra (Intelligent search),C,N,
+1107,Generative AI & Text Analytics,AWS Lex (Conversational interfaces),C,N,
+1108,Generative AI & Text Analytics,AWS SageMaker JumpStart (Foundation models),C,N,
+1101,Generative AI & Text Analytics,Amazon Bedrock,C,N,
+1102,Generative AI & Text Analytics,Anthropic (Claude API),C,N,
+1109,Generative AI & Text Analytics,Chroma (Vector database),O,N,
+1110,Generative AI & Text Analytics,Cohere (Command models),C,N,
+1111,Generative AI & Text Analytics,Databricks (AI & LLM infrastructure),C,N,
+1112,Generative AI & Text Analytics,Gemini (Google),C,N,
+1113,Generative AI & Text Analytics,Hugging Face (Model Hub),C/O,N,
+1114,Generative AI & Text Analytics,Julius AI (Conversational data analytics),C,N,
+1115,Generative AI & Text Analytics,LangChain (Framework for LLMs),O,N,
+1116,Generative AI & Text Analytics,LangGraph,O,Y,LangGraph
+1117,Generative AI & Text Analytics,LlamaIndex (RAG framework),O,N,
+1118,Generative AI & Text Analytics,Microsoft GitHub Copilot,C,Y,Microsoft GitHub Copilot
+1119,Generative AI & Text Analytics,Milvus (Vector Database),O,N,
+1120,Generative AI & Text Analytics,Mixtral (Mistral AI),C/O,N,
+1121,Generative AI & Text Analytics,MonkeyLearn (Text Analysis),C,N,
+1122,Generative AI & Text Analytics,OpenAI (GPT platform),C/O,N,
+1123,Generative AI & Text Analytics,Pinecone (Vector Database),C,N,
+1124,Generative AI & Text Analytics,Scale AI (Data Platform),C,N,
+1125,Generative AI & Text Analytics,Smolagents,O,Y,Smolagents
+1126,Generative AI & Text Analytics,Weaviate (Vector Database),C/O,N,
+2015,Golang Libraries for Data Science & Analytics,GoJSONQ (JSON query for Go),O,N,
+2017,Golang Libraries for Data Science & Analytics,Gonum (Numerical computing foundation),O,N,
+2019,Golang Libraries for Data Science & Analytics,Gorgonia (Machine learning library),O,N,
+2022,Golang Libraries for Data Science & Analytics,InfluxDB client (Time series database),O,N,
+2024,Golang Libraries for Data Science & Analytics,Pachyderm (Data version control and pipelines),C/O,N,
+2025,Golang Libraries for Data Science & Analytics,Parquet-go (Parquet file format),O,N,
+2027,Golang Libraries for Data Science & Analytics,Qframe (Dataframe-like analysis),O,N,
+2000,Golang Libraries for Data Science & Analytics,bayesian (Naive Bayesian classification),O,N,
+2001,Golang Libraries for Data Science & Analytics,bleve (Full-text search and indexing),O,N,
+2002,Golang Libraries for Data Science & Analytics,chroma (Vector database/embeddings storage),O,N,
+2003,Golang Libraries for Data Science & Analytics,csvutil (CSV file processing),O,N,
+2004,Golang Libraries for Data Science & Analytics,eaopt (Evolutionary optimization algorithms),O,N,
+2005,Golang Libraries for Data Science & Analytics,go-chart (Chart generation),O,N,
+2006,Golang Libraries for Data Science & Analytics,go-dataframe (Pandas-like dataframes),O,N,
+2007,Golang Libraries for Data Science & Analytics,go-deep (Feed-forward neural networks),O,N,
+2008,Golang Libraries for Data Science & Analytics,go-echarts (Echarts visualization library),O,N,
+2009,Golang Libraries for Data Science & Analytics,go-hep (High Energy Physics ecosystem),O,N,
+2010,Golang Libraries for Data Science & Analytics,go-mysql (MySQL toolkit and replication),O,N,
+2011,Golang Libraries for Data Science & Analytics,go-pg (PostgreSQL ORM),O,N,
+2012,Golang Libraries for Data Science & Analytics,go-sqlite3 (SQLite binding for Go),O,N,
+2013,Golang Libraries for Data Science & Analytics,gobrain (Neural networks implementation),O,N,
+2014,Golang Libraries for Data Science & Analytics,gocv (Computer vision with OpenCV),O,N,
+2016,Golang Libraries for Data Science & Analytics,golearn (Machine learning for Go),O,N,
+2018,Golang Libraries for Data Science & Analytics,gonum/plot (Scientific plotting),O,N,
+2020,Golang Libraries for Data Science & Analytics,gorgonia/tensor (Multidimensional arrays),O,N,
+2021,Golang Libraries for Data Science & Analytics,gota (Dataframes and data wrangling),O,N,
+2023,Golang Libraries for Data Science & Analytics,jsonparser (Fast JSON parsing),O,N,
+2026,Golang Libraries for Data Science & Analytics,plotinum/plot (2D plotting library),O,N,
+2028,Golang Libraries for Data Science & Analytics,statistics (Statistical functions),O,N,
+2029,Golang Libraries for Data Science & Analytics,tfgo (TensorFlow bindings for Go),O,N,
+2030,Golang Libraries for Data Science & Analytics,weaviate-go-client (Weaviate vector DB client),O,N,
+1200,JavaScript/Web Analytics Libraries,Chart.js (JavaScript charting),O,N,
+1201,JavaScript/Web Analytics Libraries,Cytoscape.js (Network visualization),O,N,
+1202,JavaScript/Web Analytics Libraries,D3.js (Data-Driven Documents),O,N,
+1203,JavaScript/Web Analytics Libraries,ECharts (JavaScript visualization library),O,N,
+1204,JavaScript/Web Analytics Libraries,FusionCharts Suite,C,Y,FusionCharts Suite
+1205,JavaScript/Web Analytics Libraries,Highcharts (Interactive JavaScript charts),C,N,
+1206,JavaScript/Web Analytics Libraries,Plotly.js (JavaScript graphing library),O,N,
+1207,JavaScript/Web Analytics Libraries,Three.js (3D visualization),O,N,
+1208,JavaScript/Web Analytics Libraries,Vega/Vega-Lite (Declarative visualization),O,N,
+1300,Low-Code/No-Code Analytics,Airtable (Spreadsheet database hybrid),C,N,
+1301,Low-Code/No-Code Analytics,AppSheet (Google no-code platform),C,N,
+1302,Low-Code/No-Code Analytics,Appsmith (Internal tools builder),C/O,N,
+1303,Low-Code/No-Code Analytics,Bubble (Visual app builder),C,N,
+1304,Low-Code/No-Code Analytics,Glide (App builder from spreadsheets),C,N,
+1305,Low-Code/No-Code Analytics,Microsoft Power Apps,C,Y,Microsoft Power Apps
+1306,Low-Code/No-Code Analytics,Microsoft Power Automate,C,Y,Microsoft Power Automate
+1307,Low-Code/No-Code Analytics,Retool (Internal tool builder),C,N,
+1309,Low-Code/No-Code Analytics,SS&C Blue Prism,C,Y,SS&C Blue Prism
+1308,Low-Code/No-Code Analytics,Zapier (Workflow automation),C,N,
+1400,Open-Source Analytics Development Tools,Apache Beam (Data processing),O,N,
+1401,Open-Source Analytics Development Tools,Apache Zeppelin Notebook,O,Y,Apache Zeppelin Notebook
+1402,Open-Source Analytics Development Tools,Bokeh (Interactive visualization library),O,N,
+1422,Open-Source Analytics Development Tools,Cygwin,O,Y,Cygwin
+1404,Open-Source Analytics Development Tools,DVC (Data Version Control),O,N,
+1403,Open-Source Analytics Development Tools,Dash (Python framework for analytical web applications),O,N,
+1416,Open-Source Analytics Development Tools,Docker,O,Y,Docker
+1405,Open-Source Analytics Development Tools,GitLab/GitHub (Version control and CI/CD),C/O,N,
+1406,Open-Source Analytics Development Tools,Grafana (Observability platform),C/O,N,
+1421,Open-Source Analytics Development Tools,Hashicorp Terraform,O,Y,Hashicorp Terraform
+1407,Open-Source Analytics Development Tools,Jupyter Notebooks,O,Y,Jupyter Notebooks
+1408,Open-Source Analytics Development Tools,Kedro (Data pipeline framework),O,N,
+1409,Open-Source Analytics Development Tools,Kibana (Data visualization for Elasticsearch),O,N,
+1410,Open-Source Analytics Development Tools,Kubeflow (ML workflows on Kubernetes),O,N,
+1411,Open-Source Analytics Development Tools,MLflow (ML lifecycle management),O,N,
+1415,Open-Source Analytics Development Tools,Microsoft Visual Studio Code,O,Y,Microsoft Visual Studio Code
+1423,Open-Source Analytics Development Tools,Microsoft Visual Studio Full IDE,C,Y,Microsoft Visual Studio Full IDE
+1424,Open-Source Analytics Development Tools,Microsoft Visual Studio Online/Codespaces,C,Y,Microsoft Visual Studio Online/Codespaces
+1425,Open-Source Analytics Development Tools,Microsoft Windows Task Scheduler,C,Y,Microsoft Windows Task Scheduler
+1419,Open-Source Analytics Development Tools,Miniforge,O,Y,Miniforge
+1420,Open-Source Analytics Development Tools,OpenTofu,O,Y,OpenTofu
+1412,Open-Source Analytics Development Tools,Prefect (Workflow orchestration),C/O,N,
+1413,Open-Source Analytics Development Tools,RStudio (IDE for R programming),C/O,N,
+1417,Open-Source Analytics Development Tools,Spyder IDE,O,Y,Spyder IDE
+1414,Open-Source Analytics Development Tools,Streamlit (Data app framework),O,N,
+1418,Open-Source Analytics Development Tools,WARP IDE,O,Y,WARP IDE
+2200,Programming Languages & Scripting,BASH script,O,Y,BASH script
+2201,Programming Languages & Scripting,C#,O,Y,C#
+2202,Programming Languages & Scripting,Golang,O,Y,Golang
+2203,Programming Languages & Scripting,JavaScript,O,Y,JavaScript
+2210,Programming Languages & Scripting,MC-Stan,O,Y,MC-Stan
+2204,Programming Languages & Scripting,NodeJS,O,Y,NodeJS
+2205,Programming Languages & Scripting,Python,O,Y,Python
+2206,Programming Languages & Scripting,R,O,Y,R
+2207,Programming Languages & Scripting,SQL,O,Y,SQL
+2208,Programming Languages & Scripting,Scala,O,Y,Scala
+2209,Programming Languages & Scripting,YAML,O,Y,YAML
+1500,Python Libraries for Data Science & Analytics,Altair (Declarative visualization),O,N,
+1501,Python Libraries for Data Science & Analytics,Beautiful Soup (Web scraping),O,N,
+1502,Python Libraries for Data Science & Analytics,CatBoost (Gradient boosting),O,N,
+1503,Python Libraries for Data Science & Analytics,Dask (Parallel computing),O,N,
+1505,Python Libraries for Data Science & Analytics,Folium (Interactive maps),O,N,
+1506,Python Libraries for Data Science & Analytics,Gensim (Topic modeling),O,N,
+1507,Python Libraries for Data Science & Analytics,GeoPandas (Geospatial data),O,N,
+1508,Python Libraries for Data Science & Analytics,Keras (Neural networks API),O,N,
+1509,Python Libraries for Data Science & Analytics,LightGBM (Gradient boosting),O,N,
+1510,Python Libraries for Data Science & Analytics,Matplotlib (Data visualization),O,N,
+1512,Python Libraries for Data Science & Analytics,NLTK (Natural language toolkit),O,N,
+1511,Python Libraries for Data Science & Analytics,NetworkX,O,Y,NetworkX
+1513,Python Libraries for Data Science & Analytics,NumPy (Numerical computing),O,N,
+1514,Python Libraries for Data Science & Analytics,Optuna (Hyperparameter optimization),O,N,
+1516,Python Libraries for Data Science & Analytics,Plotly (Interactive visualizations),O,N,
+1518,Python Libraries for Data Science & Analytics,Prophet (Time series forecasting),O,N,
+1520,Python Libraries for Data Science & Analytics,PyTorch (Deep learning),O,N,
+1519,Python Libraries for Data Science & Analytics,Pyspark,O,Y,Pyspark
+1521,Python Libraries for Data Science & Analytics,Ray (Distributed computing),O,N,
+1526,Python Libraries for Data Science & Analytics,SHAP (Model explainability),O,N,
+1528,Python Libraries for Data Science & Analytics,SQLAlchemy (SQL toolkit and ORM),O,N,
+1523,Python Libraries for Data Science & Analytics,SciPy (Scientific computing),O,N,
+1524,Python Libraries for Data Science & Analytics,Scrapy (Web crawling framework),O,N,
+1525,Python Libraries for Data Science & Analytics,Seaborn (Statistical data visualization),O,N,
+1530,Python Libraries for Data Science & Analytics,TensorFlow (Deep learning),O,N,
+1531,Python Libraries for Data Science & Analytics,Transformers (Hugging Face NLP),O,N,
+1532,Python Libraries for Data Science & Analytics,Vaex (Out-of-memory DataFrames),O,N,
+1533,Python Libraries for Data Science & Analytics,XGBoost (Gradient boosting),O,N,
+1534,Python Libraries for Data Science & Analytics,Yellowbrick (ML visualization),O,N,
+1504,Python Libraries for Data Science & Analytics,fastai (Deep learning library),O,N,
+1515,Python Libraries for Data Science & Analytics,pandas (Data manipulation and analysis),O,N,
+1517,Python Libraries for Data Science & Analytics,pmdarima (ARIMA modeling),O,N,
+1522,Python Libraries for Data Science & Analytics,scikit-learn (Machine learning),O,N,
+1527,Python Libraries for Data Science & Analytics,spaCy (Natural language processing),O,N,
+1529,Python Libraries for Data Science & Analytics,statsmodels (Statistical models),O,N,
+1600,R Libraries for Data Science & Analytics,caret (Classification and regression training),O,N,
+1601,R Libraries for Data Science & Analytics,data.table (Enhanced data frame),O,N,
+1602,R Libraries for Data Science & Analytics,dplyr (Data manipulation),O,N,
+1603,R Libraries for Data Science & Analytics,forecast (Time series forecasting),O,N,
+1604,R Libraries for Data Science & Analytics,ggplot2 (Data visualization),O,N,
+1605,R Libraries for Data Science & Analytics,knitr (Dynamic report generation),O,N,
+1606,R Libraries for Data Science & Analytics,lubridate (Date-time manipulation),O,N,
+1607,R Libraries for Data Science & Analytics,mlr3 (Machine learning framework),O,N,
+1608,R Libraries for Data Science & Analytics,plotly (Interactive plots),O,N,
+1609,R Libraries for Data Science & Analytics,randomForest (Random forest implementation),O,N,
+1610,R Libraries for Data Science & Analytics,rmarkdown (Dynamic document generation),O,N,
+1611,R Libraries for Data Science & Analytics,shiny (Interactive web applications),O,N,
+1612,R Libraries for Data Science & Analytics,tidymodels (Collection of modeling packages),O,N,
+1613,R Libraries for Data Science & Analytics,tidyr (Data tidying),O,N,
+1614,R Libraries for Data Science & Analytics,tidyverse (Collection of R packages for data science),O,N,
+1901,SQL Tools & Query Builders,DBeaver (Universal database tool),O,N,
+1900,SQL Tools & Query Builders,DataGrip (JetBrains database IDE),C,N,
+1902,SQL Tools & Query Builders,Microsoft SQL Server Management Studio (SSMS),C,Y,Microsoft SQL Server Management Studio (SSMS)
+1904,SQL Tools & Query Builders,PopSQL (Collaborative SQL editor),C,N,
+1905,SQL Tools & Query Builders,Postico (PostgreSQL client for Mac),C,N,
+1906,SQL Tools & Query Builders,Snowsight (Snowflake SQL interface),C,N,
+1907,SQL Tools & Query Builders,Supabase (Firebase alternative with SQL),C/O,N,
+1908,SQL Tools & Query Builders,Toad for Oracle (Quest),C,Y,Toad for Oracle (Quest)
+1903,SQL Tools & Query Builders,pgAdmin (PostgreSQL administration),O,N,
+1700,Semantic Layer Tools,AtScale (Enterprise semantic layer),C,N,
+1701,Semantic Layer Tools,Cube.js (Semantic layer for data apps),C/O,N,
+1703,Semantic Layer Tools,Headless BI (Semantic API layer),C,N,
+1704,Semantic Layer Tools,Looker Modeling Language (LookML),C,N,
+1705,Semantic Layer Tools,Metriql (Open-source metrics store),O,N,
+1702,Semantic Layer Tools,dbt Metrics Layer (Semantic metrics layer),O,N,
+1800,Specialized Analytics Solutions,Adobe Analytics (Marketing Analytics),C,N,
+1801,Specialized Analytics Solutions,Amplitude (Product Analytics),C,N,
+1802,Specialized Analytics Solutions,Dynatrace (Application Performance Analytics),C,N,
+1803,Specialized Analytics Solutions,Elastic (Elasticsearch Kibana),C/O,N,
+1804,Specialized Analytics Solutions,FullStory (Digital Experience Analytics),C,N,
+1805,Specialized Analytics Solutions,Google Analytics (Web Analytics),C,N,
+1816,Specialized Analytics Solutions,Google Geocode API,C,Y,Google Geocode API
+1806,Specialized Analytics Solutions,Heap (Digital Analytics),C,N,
+1807,Specialized Analytics Solutions,Hotjar (User Behavior Analytics),C,N,
+1815,Specialized Analytics Solutions,Llamasoft (Coupa Supply Chain Design),C,Y,Llamasoft (Coupa Supply Chain Design)
+1808,Specialized Analytics Solutions,Mixpanel (Product Analytics),C,N,
+1809,Specialized Analytics Solutions,Mouseflow (User Experience Analytics),C,N,
+1810,Specialized Analytics Solutions,New Relic (Observability Platform),C,N,
+1811,Specialized Analytics Solutions,Optimizely (Experimentation Platform),C,N,
+1812,Specialized Analytics Solutions,Pendo (Product Analytics),C,N,
+1817,Specialized Analytics Solutions,QGIS (ex Quantum GIS),O,Y,QGIS (ex Quantum GIS)
+1813,Specialized Analytics Solutions,Segment (Customer Data Platform),C,N,
+1814,Specialized Analytics Solutions,Splunk,C,Y,Splunk
